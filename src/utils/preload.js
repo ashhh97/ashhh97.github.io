@@ -65,28 +65,19 @@ export const preloader = new ResourcePreloader();
 
 // 关键资源预加载
 export const preloadCriticalResources = () => {
-  // 预加载关键图片
-  const criticalImages = [
-    "/src/assets/eMallHomeImg.png",
-    "/src/assets/AI%20Assistant%20Home.png",
-    "/src/assets/HarmonyHomeImg.png",
-    "/src/assets/GarageImg.png",
-  ];
-
-  preloader.preloadImages(criticalImages);
+  // 预加载关键图片 - 使用 import 方式，让 Vite 处理路径
+  // 暂时禁用图片预加载，避免路径问题
+  // const criticalImages = [];
+  // preloader.preloadImages(criticalImages);
 };
 
 // 在空闲时间预加载非关键资源
 export const preloadNonCriticalResources = () => {
   if ("requestIdleCallback" in window) {
     requestIdleCallback(() => {
-      const nonCriticalImages = [
-        "/src/assets/ying.svg",
-        "/src/assets/github-icon.svg",
-        "/src/assets/linkedin-icon.svg",
-      ];
-
-      preloader.preloadImages(nonCriticalImages);
+      // 暂时禁用图片预加载，避免路径问题
+      // const nonCriticalImages = [];
+      // preloader.preloadImages(nonCriticalImages);
     });
   }
 };

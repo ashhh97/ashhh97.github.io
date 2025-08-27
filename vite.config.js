@@ -5,7 +5,7 @@ import viteCompression from "vite-plugin-compression";
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: './',
+  base: "./",
   plugins: [
     vue(),
     viteCompression({
