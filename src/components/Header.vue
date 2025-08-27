@@ -4,7 +4,7 @@
       <!-- Left side: Logo and Brand -->
       <div class="header-left">
         <div class="logo-container" @click="goToHomepage">
-          <img src="/src/assets/ying.svg" alt="Ying" class="ying-logo" />
+          <img :src="yingLogo" alt="Ying" class="ying-logo" />
         </div>
         <div class="brand-text" @click="goToHomepage">
           <h1>YZ</h1>
@@ -34,6 +34,7 @@ import Resume from "./Resume.vue";
 import LinkedIn from "./LinkedIn.vue";
 import GitHub from "./GitHub.vue";
 import LanguageToggle from "./LanguageToggle.vue";
+import yingLogo from "../assets/ying.svg";
 
 // Emit language change to parent component
 const emit = defineEmits(["languageChange"]);

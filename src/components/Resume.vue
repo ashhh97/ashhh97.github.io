@@ -13,8 +13,9 @@
 import SocialIcon from "./SocialIcon.vue";
 
 // Image assets from Figma
-const defaultIcon = "/src/assets/resume-icon.svg";
-const hoverIcon = "/src/assets/resume-icon.svg";
+import resumeIcon from "../assets/resume-icon.svg";
+const defaultIcon = resumeIcon;
+const hoverIcon = resumeIcon;
 </script>
 
 <style scoped>

@@ -13,8 +13,9 @@
 import SocialIcon from "./SocialIcon.vue";
 
 // Image assets from Figma design
-const defaultIcon = "/src/assets/linkedin-icon.svg";
-const hoverIcon = "/src/assets/linkedin-icon.svg";
+import linkedinIcon from "../assets/linkedin-icon.svg";
+const defaultIcon = linkedinIcon;
+const hoverIcon = linkedinIcon;
 
 // LinkedIn profile URL
 const linkedInUrl =

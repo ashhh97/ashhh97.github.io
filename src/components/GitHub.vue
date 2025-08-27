@@ -13,8 +13,9 @@
 import SocialIcon from "./SocialIcon.vue";
 
 // Image assets from Figma design
-const defaultIcon = "/src/assets/github-icon.svg";
-const hoverIcon = "/src/assets/github-icon.svg";
+import githubIcon from "../assets/github-icon.svg";
+const defaultIcon = githubIcon;
+const hoverIcon = githubIcon;
 
 // GitHub profile URL
 const gitHubUrl = "https://github.com/ashhh97";

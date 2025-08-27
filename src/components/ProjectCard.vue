@@ -57,7 +57,7 @@
           <div class="title-with-lock">
             <img
               v-if="isLocked"
-              src="/src/assets/lock.svg"
+              :src="lockIcon"
               alt="Lock"
               class="inline-lock-icon"
             />
@@ -94,6 +94,7 @@
 <script setup>
 import { ref, computed, nextTick } from "vue";
 import { onMounted, onUnmounted } from "vue";
+import lockIcon from "../assets/lock.svg";
 
 // Props
 const props = defineProps({

@@ -4,7 +4,7 @@
       <!-- InfoComponent -->
       <InfoComponent
         title='YING WON <span class="reddot-text">reddot</span> 2025 Brands & Communication Design Award! Awaiting display on the Red Dot website.'
-        :image-url="'/src/assets/infoIp.png'"
+        :image-url="infoImg"
         :image-alt="'Illustrated character'"
         :is-pill-mode="true"
         style="margin-top: 64px"
@@ -18,7 +18,7 @@
             :title="translations[currentLanguage].emall.title"
             :year="translations[currentLanguage].emall.year"
             :tags="translations[currentLanguage].emall.tags"
-            :image-url="'/src/assets/eMallHomeImg.png'"
+            :image-url="eMallImg"
             :icon-url="'/src/assets/icon1.png'"
             :is-locked="!isUnlocked"
             :is-disabled="false"
@@ -32,7 +32,7 @@
             :title="translations[currentLanguage].reportAssistant.title"
             :year="translations[currentLanguage].reportAssistant.year"
             :tags="translations[currentLanguage].reportAssistant.tags"
-            :image-url="'/src/assets/AI%20Assistant%20Home.png'"
+            :image-url="aiAssistantImg"
             :icon-url="'/src/assets/icon4.png'"
             :is-locked="false"
             :is-disabled="false"
@@ -44,7 +44,7 @@
             :title="translations[currentLanguage].harmony.title"
             :year="translations[currentLanguage].harmony.year"
             :tags="translations[currentLanguage].harmony.tags"
-            :image-url="'/src/assets/HarmonyHomeImg.png'"
+            :image-url="harmonyImg"
             :is-locked="false"
             :is-disabled="false"
             @card-click="handleProjectClick"
@@ -55,7 +55,7 @@
             :title="translations[currentLanguage].mobile.title"
             :year="translations[currentLanguage].mobile.year"
             :tags="translations[currentLanguage].mobile.tags"
-            :image-url="'/src/assets/GarageImg.png'"
+            :image-url="garageImg"
             :icon-url="'/src/assets/icon2.png'"
             :is-locked="false"
             :is-disabled="false"
@@ -72,6 +72,13 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import InfoComponent from "./InfoComponent.vue";
 import ProjectCard from "./ProjectCard.vue";
+
+// Import images
+import infoImg from "../assets/infoIp.png";
+import eMallImg from "../assets/eMallHomeImg.png";
+import aiAssistantImg from "../assets/AI Assistant Home.png";
+import harmonyImg from "../assets/HarmonyHomeImg.png";
+import garageImg from "../assets/GarageImg.png";
 
 // Router
 const router = useRouter();
