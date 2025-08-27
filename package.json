@@ -11,7 +11,8 @@
     "optimize-images": "node scripts/optimize-images.js",
     "compress-videos": "node scripts/compress-videos.js",
     "optimize-all": "npm run optimize-images && npm run compress-videos",
-    "build-optimized": "npm run optimize-all && npm run build"
+    "build-optimized": "npm run optimize-all && npm run build",
+    "deploy": "npm run build && gh-pages -d dist"
   },
   "dependencies": {
     "vue": "^3.5.18",
@@ -19,6 +20,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.1",
+    "gh-pages": "^6.3.0",
     "rollup-plugin-visualizer": "^5.12.0",
     "sharp": "^0.34.3",
     "terser": "^5.43.1",
