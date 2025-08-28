@@ -172,6 +172,15 @@ const switchTab = async (tabKey, index) => {
     activeTabIndex.value = index;
     emit("tabChange", tabKey);
 
+    // Google Analytics事件追踪
+    if (typeof gtag !== "undefined") {
+      gtag("event", "tab_switch", {
+        event_category: "engagement",
+        event_label: tabKey,
+        custom_parameter_1: tabKey === "uxWork" ? "UX Work" : "Playground",
+      });
+    }
+
     // Calculate and animate sliding background
     await nextTick();
     const { offset, width } = calculateSlidingDimensions(index);

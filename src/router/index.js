@@ -45,4 +45,16 @@ const router = createRouter({
   },
 });
 
+// Google Analytics页面追踪
+router.afterEach((to, from) => {
+  // 确保gtag函数存在
+  if (typeof gtag !== "undefined") {
+    gtag("config", "G-WF1BPL2EF5", {
+      page_title: to.name || to.path,
+      page_location: window.location.href,
+      page_path: to.path,
+    });
+  }
+});
+
 export default router;
