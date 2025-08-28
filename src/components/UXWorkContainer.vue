@@ -34,9 +34,11 @@
             :tags="translations[currentLanguage].reportAssistant.tags"
             :image-url="aiAssistantImg"
             :icon-url="'/src/assets/icon4.png'"
-            :is-locked="false"
+            :is-locked="!isUnlocked"
             :is-disabled="false"
+            :password="sharedPassword"
             @card-click="handleProjectClick"
+            @password-submit="handlePasswordSubmit"
           />
 
           <!-- Project Card 3 - HarmonyOS Card -->
@@ -196,26 +198,31 @@ const handlePasswordSubmit = (passwordData) => {
 
   // Check if the submitted password matches the shared password
   if (passwordData.password === sharedPassword) {
+    // Unlock all cards first
+    isUnlocked.value = true;
+    localStorage.setItem("portfolioUnlocked", "true");
+    console.log("Password correct - unlocking all cards");
+
     // Check if this is the eMall Redesign project
     if (
       passwordData.title === translations[currentLanguage.value].emall.title ||
       passwordData.title === "eMall Redesign" ||
       passwordData.title === "eMall 重新设计"
     ) {
-      // For eMall Redesign, unlock all cards AND navigate to the page
-      isUnlocked.value = true;
-      localStorage.setItem("portfolioUnlocked", "true");
-      console.log(
-        "eMall Redesign unlocked - navigating to project page and unlocking all cards"
-      );
-
-      // Navigate to eMall page using Vue Router
+      console.log("Navigating to eMall page");
       router.push("/emall");
+    } 
+    // Check if this is the Report Assistant project
+    else if (
+      passwordData.title === translations[currentLanguage.value].reportAssistant.title ||
+      passwordData.title === "Report Assistant Design" ||
+      passwordData.title === "报告助手设计"
+    ) {
+      console.log("Navigating to Report Assistant page");
+      router.push("/reportassistant");
     } else {
-      // For other locked projects, unlock all cards
-      isUnlocked.value = true;
-      localStorage.setItem("portfolioUnlocked", "true");
-      console.log("All locked cards are now unlocked!");
+      // For other locked projects, show success page
+      console.log("Other locked project unlocked");
 
       // Open a new page
       const newWindow = window.open("", "_blank");
