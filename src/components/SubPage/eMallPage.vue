@@ -25,7 +25,14 @@
             {{ currentContent.features.feature1.title }}
           </h2>
           <div class="section-video">
-            <video controls muted loop preload="metadata">
+            <video
+              ref="video1"
+              controls
+              muted
+              loop
+              preload="metadata"
+              @loadeddata="handleVideoLoaded"
+            >
               <source
                 src="/src/assets/video/eMall/AIRec.mp4"
                 type="video/mp4"
@@ -44,7 +51,14 @@
             {{ currentContent.features.feature2.title }}
           </h2>
           <div class="section-video">
-            <video controls muted loop preload="metadata">
+            <video
+              ref="video2"
+              controls
+              muted
+              loop
+              preload="metadata"
+              @loadeddata="handleVideoLoaded"
+            >
               <source
                 src="/src/assets/video/eMall/PRassistanceBlack.mp4"
                 type="video/mp4"
@@ -63,7 +77,14 @@
             {{ currentContent.features.feature3.title }}
           </h2>
           <div class="section-video">
-            <video controls muted loop preload="metadata">
+            <video
+              ref="video3"
+              controls
+              muted
+              loop
+              preload="metadata"
+              @loadeddata="handleVideoLoaded"
+            >
               <source
                 src="/src/assets/video/eMall/Message2.mp4"
                 type="video/mp4"
@@ -102,11 +123,21 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, onUnmounted, computed } from "vue";
 import Header from "../Header.vue";
 
 // Language state
 const currentLanguage = ref("english");
+
+// Video refs
+const video1 = ref(null);
+const video2 = ref(null);
+const video3 = ref(null);
+
+// Video autoplay management
+const videosLoaded = ref(new Set());
+const observers = ref([]);
+let firstVideoPlayed = false;
 
 // Translation data
 const translations = {
@@ -181,6 +212,46 @@ const handleLanguageChange = (language) => {
   currentLanguage.value = language;
 };
 
+// Video loading handler
+const handleVideoLoaded = (event) => {
+  const video = event.target;
+  videosLoaded.value.add(video);
+
+  // Play first video immediately when loaded
+  if (!firstVideoPlayed && video === video1.value) {
+    video.play().catch((e) => console.log("Auto-play prevented:", e));
+    firstVideoPlayed = true;
+  }
+};
+
+// Intersection Observer for lazy video playback
+const createVideoObserver = (video) => {
+  if (!video || !("IntersectionObserver" in window)) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+          // Video is 50% visible, try to play
+          if (videosLoaded.value.has(video)) {
+            video.play().catch((e) => console.log("Auto-play prevented:", e));
+          }
+        } else {
+          // Video is not visible, pause to save resources
+          video.pause();
+        }
+      });
+    },
+    {
+      threshold: [0, 0.5, 1],
+      rootMargin: "50px",
+    }
+  );
+
+  observer.observe(video);
+  observers.value.push(observer);
+};
+
 // Initialize language from localStorage on mount
 onMounted(() => {
   const savedLanguage = localStorage.getItem("portfolioLanguage");
@@ -190,6 +261,21 @@ onMounted(() => {
   ) {
     currentLanguage.value = savedLanguage;
   }
+
+  // Setup video observers after DOM is ready
+  setTimeout(() => {
+    [video1.value, video2.value, video3.value].forEach((video) => {
+      if (video) {
+        createVideoObserver(video);
+      }
+    });
+  }, 100);
+});
+
+// Cleanup observers on unmount
+onUnmounted(() => {
+  observers.value.forEach((observer) => observer.disconnect());
+  observers.value = [];
 });
 </script>
 
@@ -252,9 +338,7 @@ onMounted(() => {
 }
 
 .cta-link:focus {
-  outline: 2px solid #000000 !important;
-  outline-offset: 2px;
-  border-radius: 4px;
+  outline: none !important; /* Remove black focus outline */
 }
 
 .cta-link:active {
