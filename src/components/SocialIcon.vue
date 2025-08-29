@@ -101,6 +101,11 @@ const handleClick = () => {
   display: block;
   width: 100%;
   height: 100%;
+  outline: none; /* Remove focus outline */
+}
+
+.social-link:focus {
+  outline: none; /* Remove focus outline */
 }
 
 .social-button {
@@ -119,12 +124,17 @@ const handleClick = () => {
   height: 40px;
   transition: all 0.3s ease;
   cursor: pointer;
+  outline: none; /* Remove focus outline */
   /* Prevent break points during zoom/shrink */
   transform-origin: center;
   will-change: transform;
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.social-button:focus {
+  outline: none; /* Remove focus outline */
 }
 
 .social-button.hover {

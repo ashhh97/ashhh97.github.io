@@ -3,7 +3,7 @@
     <div class="container-content">
       <!-- InfoComponent -->
       <InfoComponent
-        title='YING WON <span class="reddot-text">reddot</span> 2025 Brands & Communication Design Award! Awaiting display on the Red Dot website.'
+        title='YING WON <span class="reddot-text">reddot</span> 2025 Brands & Communication Design Award! Awaiting display on the <span class="reddot-text">reddot</span> website.'
         :image-url="infoImg"
         :image-alt="'Illustrated character'"
         :is-pill-mode="true"
@@ -211,10 +211,11 @@ const handlePasswordSubmit = (passwordData) => {
     ) {
       console.log("Navigating to eMall page");
       router.push("/emall");
-    } 
+    }
     // Check if this is the Report Assistant project
     else if (
-      passwordData.title === translations[currentLanguage.value].reportAssistant.title ||
+      passwordData.title ===
+        translations[currentLanguage.value].reportAssistant.title ||
       passwordData.title === "Report Assistant Design" ||
       passwordData.title === "报告助手设计"
     ) {
@@ -369,7 +370,17 @@ defineExpose({
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+  .ux-work-container {
+    padding: 0 16px; /* Match playground padding */
+  }
+}
+
 @media (max-width: 768px) {
+  .ux-work-container {
+    padding: 0 16px; /* Match playground padding */
+  }
+
   .container-content {
     gap: 60px;
   }
@@ -390,6 +401,12 @@ defineExpose({
     grid-template-columns: 1fr;
     gap: 24px;
     row-gap: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ux-work-container {
+    padding: 0 12px; /* Match playground padding for small screens */
   }
 }
 </style>

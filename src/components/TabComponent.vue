@@ -71,6 +71,7 @@ import {
   ref,
   computed,
   onMounted,
+  onBeforeUnmount,
   nextTick,
   watch,
   defineAsyncComponent,
@@ -156,9 +157,14 @@ const calculateSlidingDimensions = (index) => {
     // Get the tab's actual width including padding
     const tabWidth = tabRect.width;
 
-    // Adjust for padding to account for the tab navigation padding
+    // Get current navigation padding from computed styles for dynamic adjustment
+    const navElement = tabElement.closest(".tab-navigation");
+    const navStyles = window.getComputedStyle(navElement);
+    const navPaddingLeft = parseInt(navStyles.paddingLeft);
+
+    // Calculate offset that perfectly centers on the text
     return {
-      offset: leftPosition - 24, // 24px is the left padding of tab-navigation
+      offset: leftPosition,
       width: tabWidth,
     };
   }
@@ -219,7 +225,32 @@ onMounted(async () => {
   setTimeout(async () => {
     await recalculateDimensions();
   }, 500);
+
+  // Add window resize listener to recalculate on responsive breakpoints
+  const handleResize = debounce(async () => {
+    await recalculateDimensions();
+  }, 150);
+
+  window.addEventListener("resize", handleResize);
+
+  // Cleanup on unmount
+  onBeforeUnmount(() => {
+    window.removeEventListener("resize", handleResize);
+  });
 });
+
+// Debounce function to prevent excessive recalculations
+const debounce = (func, wait) => {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+};
 
 // Helper function to recalculate dimensions
 const recalculateDimensions = async () => {
@@ -288,7 +319,7 @@ watch(
 .sliding-background {
   position: absolute;
   top: 8px;
-  left: 24px; /* Match the left padding of tab-navigation */
+  left: 0; /* JavaScript will position this dynamically */
   height: calc(100% - 16px); /* Full height minus top/bottom padding */
   background: #000000;
   border-radius: 100px;
@@ -411,18 +442,56 @@ watch(
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) and (min-width: 769px) {
+  /* Tablet styles */
+  .tab-navigation {
+    width: 400px;
+    padding: 8px 20px;
+  }
+
+  .sliding-background {
+    top: 8px;
+    height: calc(100% - 16px);
+  }
+
+  .tab-item {
+    padding: 8px 18px;
+  }
+}
+
 @media (max-width: 768px) {
   .tab-navigation {
-    width: 400px; /* Keep the same width as desktop */
+    width: 380px;
     padding: 6px 16px;
   }
 
   .sliding-background {
-    left: 16px; /* Match mobile padding */
+    top: 6px;
+    height: calc(100% - 12px);
   }
 
   .tab-item {
     padding: 6px 16px;
+  }
+
+  .tab-item span {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tab-navigation {
+    width: 320px;
+    padding: 6px 12px;
+  }
+
+  .sliding-background {
+    top: 6px;
+    height: calc(100% - 12px);
+  }
+
+  .tab-item {
+    padding: 6px 12px;
   }
 
   .tab-item span {

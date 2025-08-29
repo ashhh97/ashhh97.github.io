@@ -99,6 +99,11 @@ onMounted(() => {
   transition: all 0.3s ease;
   background-color: #2c2c2c;
   overflow: hidden;
+  outline: none; /* Remove focus outline */
+}
+
+.toggle-container:focus {
+  outline: none; /* Remove focus outline */
 }
 
 .toggle-container.chinese-mode {

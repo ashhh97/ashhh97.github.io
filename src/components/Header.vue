@@ -131,20 +131,72 @@ const goToHomepage = () => {
 /* Responsive Design */
 @media (max-width: 768px) {
   .header {
-    padding: 1rem;
+    padding: 56px 1rem 1rem 1rem; /* Keep same top distance as desktop */
   }
 
   .header-container {
-    flex-direction: column;
-    gap: 1rem;
+    /* Keep horizontal layout - NO flex-direction: column */
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header-left {
+    gap: 0.75rem;
+  }
+
+  .logo-container {
+    width: 40px;
+    height: 40px;
+  }
+
+  .brand-text h1 {
+    font-size: 20px;
   }
 
   .header-right {
-    gap: 1rem;
+    gap: 0.75rem;
   }
 
   .social-icons {
     gap: 0.5rem;
+  }
+
+  .language-toggle-container {
+    width: 48px;
+    height: 22px;
+  }
+}
+
+/* Extra small mobile screens */
+@media (max-width: 480px) {
+  .header {
+    padding: 56px 0.75rem 0.75rem 0.75rem; /* Keep same top distance */
+  }
+
+  .header-left {
+    gap: 0.5rem;
+  }
+
+  .logo-container {
+    width: 40px;
+    height: 40px;
+  }
+
+  .brand-text h1 {
+    font-size: 18px;
+  }
+
+  .header-right {
+    gap: 0.5rem;
+  }
+
+  .social-icons {
+    gap: 0.25rem;
+  }
+
+  .language-toggle-container {
+    width: 44px;
+    height: 20px;
   }
 }
 </style>

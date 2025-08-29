@@ -149,8 +149,8 @@ const handleBottomAction = () => {
 <style scoped>
 .info-component {
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: 1200px; /* Match UXWorkContainer max-width */
+  margin: 0 auto; /* Match UXWorkContainer centering */
   padding: 0;
   font-family: "Poppins", sans-serif;
 }
@@ -221,9 +221,9 @@ const handleBottomAction = () => {
   line-height: 1.4;
 }
 
-.reddot-text {
+:deep(.reddot-text) {
   font-weight: 500;
-  color: #d90513;
+  color: #d90513 !important; /* Force red color for reddot text */
 }
 
 .info-content {
@@ -434,6 +434,10 @@ const handleBottomAction = () => {
 
 /* Responsive Design */
 @media (max-width: 1024px) {
+  .info-component {
+    padding: 0 16px; /* Match UXWorkContainer padding */
+  }
+
   .info-content {
     flex-direction: column;
     gap: 40px;
@@ -447,20 +451,27 @@ const handleBottomAction = () => {
 
 @media (max-width: 768px) {
   .info-component {
-    padding: 20px 16px;
+    padding: 0 16px; /* Match UXWorkContainer padding */
   }
 
   .pill-container {
     padding: 12px 20px;
     gap: 12px;
     min-height: 32px;
-    margin-left: 20px;
+    margin-left: 0; /* Remove margin to match container width */
+    width: 100%; /* Ensure full width */
+    max-width: none; /* Remove max-width constraint */
   }
 
   .pill-image {
     width: 48px;
     height: 54px;
-    left: -20px;
+    left: -40px; /* Move further left to avoid text overlap */
+    top: 20px;
+  }
+
+  .pill-text {
+    margin-left: 32px; /* Adjust spacing for mobile */
   }
 
   .pill-text span {
@@ -504,20 +515,21 @@ const handleBottomAction = () => {
 
 @media (max-width: 700px) {
   .pill-container {
-    margin-left: 50px;
+    margin-left: 0; /* Remove margin to match container width */
     padding: 12px 16px;
-    max-width: 400px;
-    width: auto;
+    max-width: none; /* Remove max-width constraint */
+    width: 100%; /* Ensure full width */
   }
 
   .pill-image {
     width: 40px;
     height: 45px;
-    left: -45px;
+    left: -40px; /* Move further left to avoid text overlap */
+    top: 20px;
   }
 
   .pill-text {
-    margin-left: 25px;
+    margin-left: 30px; /* Increase spacing to avoid overlap */
   }
 
   .pill-text span {
@@ -527,6 +539,10 @@ const handleBottomAction = () => {
 }
 
 @media (max-width: 480px) {
+  .info-component {
+    padding: 0 12px; /* Match UXWorkContainer padding for small screens */
+  }
+
   .info-title {
     font-size: 24px;
   }
@@ -550,20 +566,20 @@ const handleBottomAction = () => {
 
 @media (max-width: 400px) {
   .pill-container {
-    margin-left: 45px;
+    margin-left: 0; /* Remove margin to match container width */
     padding: 10px 12px;
-    max-width: 350px;
-    width: auto;
+    max-width: none; /* Remove max-width constraint */
+    width: 100%; /* Ensure full width */
   }
 
   .pill-image {
     width: 35px;
     height: 40px;
-    left: -40px;
+    left: -18px; /* Position to not overlap text */
   }
 
   .pill-text {
-    margin-left: 15px;
+    margin-left: 22px; /* Increase spacing to avoid overlap */
   }
 
   .pill-text span {
