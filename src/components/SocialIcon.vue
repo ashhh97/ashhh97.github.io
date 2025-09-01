@@ -80,6 +80,16 @@ const isHovered = ref(false);
 
 // Handle click events
 const handleClick = () => {
+  // Google Analytics埋点 - 追踪社交图标点击
+  if (typeof gtag !== "undefined") {
+    gtag("event", "social_icon_click", {
+      event_category: "engagement",
+      event_label: props.name,
+      icon_type: props.name.toLowerCase(),
+      target_url: props.href || "no_url",
+    });
+  }
+
   if (props.onClick) {
     props.onClick();
   } else if (props.href && props.href !== "#") {

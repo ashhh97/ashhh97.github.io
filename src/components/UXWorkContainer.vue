@@ -106,7 +106,7 @@ const translations = {
       tags: "#UX Design #Visual Design",
     },
     harmony: {
-      title: "HarmonyOS Card",
+      title: "HarmonyOS Truck Driver Card",
       year: "2023",
       tags: "#Mobile #UX Design #User Test",
     },
@@ -128,7 +128,7 @@ const translations = {
       tags: "#视觉设计",
     },
     harmony: {
-      title: "鸿蒙系统卡片",
+      title: "鸿蒙卡车司机卡片",
       year: "2023",
       tags: "#移动端",
     },
@@ -162,8 +162,8 @@ const handleProjectClick = (projectData) => {
   // Navigate to HarmonyOS page
   if (
     projectData.title === translations[currentLanguage.value].harmony.title ||
-    projectData.title === "HarmonyOS Card" ||
-    projectData.title === "鸿蒙系统卡片"
+    projectData.title === "HarmonyOS Truck Driver Card" ||
+    projectData.title === "鸿蒙卡车司机卡片"
   ) {
     // Navigate to HarmonyOS page using Vue Router
     router.push("/harmonyos");
