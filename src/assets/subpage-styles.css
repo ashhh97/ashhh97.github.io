@@ -183,6 +183,7 @@
 .page-footer {
   text-align: left;
   padding: 40px 0;
+  margin-top: 160px;
 }
 
 .page-footer p {
@@ -267,7 +268,7 @@
 }
 
 .cta-section {
-  margin-top: 32px;
+  margin-top: 160px;
   margin-bottom: 80px;
   width: 100%;
 }
@@ -368,8 +369,16 @@
     font-size: 16px;
   }
 
+  .cta-section {
+    margin-top: 80px;
+  }
+
   .cta-text {
     font-size: 20px;
+  }
+
+  .page-footer {
+    margin-top: 80px;
   }
 
   .footer {
