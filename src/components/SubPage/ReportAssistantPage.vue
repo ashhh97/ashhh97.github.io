@@ -117,6 +117,9 @@
 
             <!-- Solution Section -->
             <div class="solution-section">
+              <h2 class="time-improvement-title">
+                {{ currentContent.sections.section1.timeImprovement }}
+              </h2>
               <h3 class="solution-subtitle">
                 {{ currentContent.sections.section1.title }}
               </h3>
@@ -156,6 +159,9 @@
 
             <!-- Solution Section -->
             <div class="solution-section">
+              <h2 class="time-improvement-title">
+                {{ currentContent.sections.section2.timeImprovement }}
+              </h2>
               <h3 class="solution-subtitle">
                 {{ currentContent.sections.section2.title }}
               </h3>
@@ -195,6 +201,9 @@
 
             <!-- Solution Section -->
             <div class="solution-section">
+              <h2 class="time-improvement-title">
+                {{ currentContent.sections.section3.timeImprovement }}
+              </h2>
               <h3 class="solution-subtitle">
                 {{ currentContent.sections.section3.title }}
               </h3>
@@ -356,11 +365,13 @@ const translations = {
       },
       section1: {
         title: "Intelligent Data Lookup and Report Generation",
+        timeImprovement: "0.5 days → 2 mins",
         description1:
           "The system matches data based on query criteria and generates trend forecasts, with full control over the data.",
       },
       section2: {
         title: "Smart Connected Price Lookup",
+        timeImprovement: "1.2 days → 0.5 days",
         problemTitle: "Inefficient Raw Material Price Sourcing",
         problemDescription:
           "The user has to manually search for raw material prices on multiple e-commerce platforms like JD.com, Alibaba, and Taobao, while also having to ask other product managers for historical pricing data.",
@@ -369,6 +380,7 @@ const translations = {
       },
       section3: {
         title: "Intelligent Report Checking",
+        timeImprovement: "1 hour → 10 mins",
         problemTitle: "Manual Report Review",
         problemDescription:
           "Check the report page by page. which needs an hour",
@@ -386,8 +398,9 @@ const translations = {
       reportLabel: "Report Covered",
       reportDescription: "Covering over 200+ supplier selection reports",
       efficiencyImprovement: "30%",
-      efficiencyLabel: "Efficiency",
-      efficiencyDescription: "Report Writing efficiency improved by 30%.",
+      efficiencyLabel: "Minimum Efficiency Boost",
+      efficiencyDescription:
+        "Minimum Report Writing efficiency improved by 30%.",
     },
     cta: {
       text1: "Please feel free to",
@@ -441,11 +454,13 @@ const translations = {
       },
       section1: {
         title: "智能数据查询与报告生成",
+        timeImprovement: "0.5天 → 2分钟",
         description1:
           "系统会根据查询条件匹配相应数据，并生成趋势预测，数据全程可控。",
       },
       section2: {
         title: "联网智能报价查询",
+        timeImprovement: "1.2天 → 0.5天",
         problemTitle: "低效的原材料价格采购",
         problemDescription:
           "用户必须在多个电商平台（如京东、阿里巴巴、淘宝）上手动搜索原材料价格，同时还需要向其他产品经理询问历史价格数据。",
@@ -454,6 +469,7 @@ const translations = {
       },
       section3: {
         title: "智能报告检测",
+        timeImprovement: "1小时 → 10分钟",
         problemTitle: "手动报告审查",
         problemDescription: "逐页检查报告，需要一个小时",
         description1:
@@ -469,8 +485,8 @@ const translations = {
       reportLabel: "报告覆盖",
       reportDescription: "涵盖超过200+份供应商选择报告",
       efficiencyImprovement: "30%",
-      efficiencyLabel: "效率",
-      efficiencyDescription: "报告撰写效率提升了30%。",
+      efficiencyLabel: "最低效率提升",
+      efficiencyDescription: "最低报告撰写效率提升了30%。",
     },
     cta: {
       text1: "请随时",
@@ -799,6 +815,16 @@ onUnmounted(() => {
   object-fit: cover;
 }
 
+/* Time Improvement Title */
+.time-improvement-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 36px;
+  font-weight: 500;
+  color: #000000;
+  margin: 0 0 32px 0;
+  line-height: normal;
+}
+
 /* Result section styles */
 .result-section {
   margin: 160px 0 0 0;
@@ -987,6 +1013,11 @@ onUnmounted(() => {
 
   .metric-description {
     font-size: 12px;
+  }
+
+  .time-improvement-title {
+    font-size: 28px;
+    margin-bottom: 24px;
   }
 }
 </style>

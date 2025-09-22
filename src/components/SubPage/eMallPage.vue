@@ -63,74 +63,43 @@
         <div class="notice-section">
           <p class="notice-text" v-html="currentContent.notice"></p>
         </div>
+      </div>
 
-        <!-- Result Section -->
-        <section class="result-section">
-          <h2 class="result-title">
-            {{ currentContent.result.title }}
-          </h2>
-
-          <!-- UI Image -->
-          <div class="result-image-container">
-            <img
-              src="/src/assets/video/eMall/UI.png"
-              alt="eMall UI Design"
-              class="result-image"
-            />
+      <!-- Background Section -->
+      <div class="background-section">
+        <h2 class="background-title">{{ currentContent.background.title }}</h2>
+        <div class="conversation-container">
+          <div class="conversation-item">
+            <div class="speaker-info">
+              <img
+                src="/src/assets/video/eMall/LeadPM.png"
+                alt="Lead PM"
+                class="speaker-avatar"
+              />
+              <p class="speaker-name">
+                {{ currentContent.background.speaker1.name }}
+              </p>
+            </div>
+            <div class="message-bubble speaker1-message">
+              <p v-html="currentContent.background.speaker1.message"></p>
+            </div>
           </div>
-
-          <!-- Metrics Grid -->
-          <div class="metrics-grid">
-            <!-- User Satisfaction Score -->
-            <div class="metric-item">
-              <div class="metric-value">
-                <span class="metric-number">{{
-                  currentContent.result.satisfactionScore
-                }}</span>
-                <span class="metric-label">{{
-                  currentContent.result.satisfactionLabel
-                }}</span>
-              </div>
-              <p class="metric-description">
-                {{ currentContent.result.satisfactionDescription }}
-              </p>
+          <div class="conversation-item">
+            <div class="message-bubble speaker2-message">
+              <p v-html="currentContent.background.speaker2.message"></p>
             </div>
-
-            <!-- Steps Reduction -->
-            <div class="metric-item">
-              <div class="metric-value">
-                <span class="metric-number">{{
-                  currentContent.result.stepsReduction
-                }}</span>
-                <span class="metric-arrow">→</span>
-                <span class="metric-number">{{
-                  currentContent.result.stepsAfter
-                }}</span>
-                <span class="metric-label">{{
-                  currentContent.result.stepsLabel
-                }}</span>
-              </div>
-              <p class="metric-description">
-                {{ currentContent.result.stepsDescription }}
-              </p>
-            </div>
-
-            <!-- Efficiency Improvement -->
-            <div class="metric-item">
-              <div class="metric-value">
-                <span class="metric-number">{{
-                  currentContent.result.efficiencyImprovement
-                }}</span>
-                <span class="metric-label">{{
-                  currentContent.result.efficiencyLabel
-                }}</span>
-              </div>
-              <p class="metric-description">
-                {{ currentContent.result.efficiencyDescription }}
+            <div class="speaker-info">
+              <img
+                src="/src/assets/video/eMall/Me.png"
+                alt="Me"
+                class="speaker-avatar"
+              />
+              <p class="speaker-name">
+                {{ currentContent.background.speaker2.name }}
               </p>
             </div>
           </div>
-        </section>
+        </div>
       </div>
 
       <!-- Challenge & Solution -->
@@ -160,10 +129,28 @@
 
         <!-- Analysis -->
         <div class="analysis-content">
-          <p
-            class="analysis-text"
-            v-html="currentContent.challengeSection.analysis"
-          ></p>
+          <ol class="analysis-list">
+            <li v-html="currentContent.challengeSection.analysis.item1"></li>
+            <li v-html="currentContent.challengeSection.analysis.item2"></li>
+            <li v-html="currentContent.challengeSection.analysis.item3"></li>
+          </ol>
+        </div>
+
+        <!-- Follow-up Message -->
+        <div class="follow-up-message">
+          <div class="speaker-info">
+            <img
+              src="/src/assets/video/eMall/Me.png"
+              alt="Me"
+              class="speaker-avatar"
+            />
+            <p class="speaker-name">
+              {{ currentContent.challengeSection.followUp.speaker }}
+            </p>
+          </div>
+          <div class="message-bubble follow-up-bubble">
+            <p v-html="currentContent.challengeSection.followUp.message"></p>
+          </div>
         </div>
       </div>
 
@@ -517,6 +504,74 @@
           </div>
         </section>
 
+        <!-- Result Section -->
+        <section class="result-section">
+          <h2 class="result-title">
+            {{ currentContent.result.title }}
+          </h2>
+
+          <!-- UI Image -->
+          <div class="result-image-container">
+            <img
+              src="/src/assets/video/eMall/UI.png"
+              alt="eMall UI Design"
+              class="result-image"
+            />
+          </div>
+
+          <!-- Metrics Grid -->
+          <div class="metrics-grid">
+            <!-- User Satisfaction Score -->
+            <div class="metric-item">
+              <div class="metric-value">
+                <span class="metric-number">{{
+                  currentContent.result.satisfactionScore
+                }}</span>
+                <span class="metric-label">{{
+                  currentContent.result.satisfactionLabel
+                }}</span>
+              </div>
+              <p class="metric-description">
+                {{ currentContent.result.satisfactionDescription }}
+              </p>
+            </div>
+
+            <!-- Steps Reduction -->
+            <div class="metric-item">
+              <div class="metric-value">
+                <span class="metric-number">{{
+                  currentContent.result.stepsReduction
+                }}</span>
+                <span class="metric-arrow">→</span>
+                <span class="metric-number">{{
+                  currentContent.result.stepsAfter
+                }}</span>
+                <span class="metric-label">{{
+                  currentContent.result.stepsLabel
+                }}</span>
+              </div>
+              <p class="metric-description">
+                {{ currentContent.result.stepsDescription }}
+              </p>
+            </div>
+
+            <!-- Efficiency Improvement -->
+            <div class="metric-item">
+              <div class="metric-value">
+                <span class="metric-number">{{
+                  currentContent.result.efficiencyImprovement
+                }}</span>
+                <span class="metric-label">{{
+                  currentContent.result.efficiencyLabel
+                }}</span>
+              </div>
+              <p class="metric-description">
+                {{ currentContent.result.efficiencyDescription }}
+              </p>
+            </div>
+          </div>
+        </section>
+
         <!-- More features indicator -->
         <div class="more-features">
           <p>...</p>
@@ -655,8 +710,19 @@ const translations = {
         description:
           " Unlike a traditional e-commerce site, we don't extensively track user retention and conversion or build a full funnel model, as we don't encourage employees to spend heavily. Currently, I can only analyze user behavior using basic data like the number of active users per department, average pageviews per user, and average time on page.",
       },
-      analysis:
-        "<strong>Preliminary data analysis and in-depth user interviews：</strong> Data shows <strong>Manufacturing</strong> and <strong>Procurement departments have a significant lead</strong> in average pageviews and time on page, suggesting they have <strong>professional buyers</strong>. <strong>NextLab</strong> users also have a significant lead in numbers but low time on page, possibly indicating they are <strong>goal-oriented</strong>. The Consumer <strong>Devices department</strong> ranks high in user count, but their <strong>low usage</strong> suggests many are <strong>new users</strong>. I will conduct in-depth interviews with users from these four departments.",
+      analysis: {
+        item1:
+          "Data shows <strong>Manufacturing</strong> and <strong>Procurement departments have a significant lead</strong> in average pageviews and time on page, suggesting they have <strong>professional buyers</strong>.",
+        item2:
+          "<strong>NextLab</strong> users also have a significant lead in numbers but low time on page, possibly indicating they are <strong>goal-oriented</strong>.",
+        item3:
+          "The Consumer <strong>Devices department</strong> ranks high in user count, but their <strong>low usage</strong> suggests many are <strong>new users</strong>.",
+      },
+      followUp: {
+        speaker: "Me",
+        message:
+          "Time to conduct <strong>in-depth User Interviews</strong> from these 4 departments",
+      },
     },
     userGroups: {
       title: "Classified user groups",
@@ -698,7 +764,20 @@ const translations = {
       efficiencyImprovement: "20%",
       efficiencyLabel: "Minimum Efficiency Boost",
       efficiencyDescription:
-        "Order processing efficiency has increased by 20%.",
+        "Minimum order processing efficiency has increased by 20%.",
+    },
+    background: {
+      title: "Background",
+      speaker1: {
+        name: "Lead PM",
+        message:
+          "Everyone is saying on the forum that eMall is <strong>difficult to use</strong>. Can you help me figure out how to optimize it?",
+      },
+      speaker2: {
+        name: "Me",
+        message:
+          "Sure... I analyzed the problem tickets Excel, and it's all about business process. Let me take a look at the <strong>data </strong> to find some opportunities for experience optimization...",
+      },
     },
     cta: {
       text1: "Please feel free to",
@@ -791,8 +870,18 @@ const translations = {
         description:
           " 与传统的电子商务网站不同，我们不广泛跟踪用户留存和转化率，也不建立完整的漏斗模型，因为我们不鼓励员工大量消费。目前，我只能使用基本数据来分析用户行为，如每个部门的活跃用户数、每个用户的平均页面浏览次数和平均页面停留时间。",
       },
-      analysis:
-        "<strong>初步数据分析和深度用户访谈：</strong>数据显示<strong>制造部门</strong>和<strong>采购部门在人均浏览和停留时长上断层领先</strong>，可能存在<strong>专业采购员</strong>。<strong>NextLab</strong>用户在数量上也断层领先，但页面停留时间较短，可能是有<strong>明确购买目标的用户</strong>。<strong>消费者终端部门</strong>在用户数量方面排名很高，但<strong>使用不频繁</strong>可能存在<strong>新手用户</strong>。我将从这四个部门入手，进行深入访谈。",
+      analysis: {
+        item1:
+          "数据显示<strong>制造部门</strong>和<strong>采购部门在人均浏览和停留时长上断层领先</strong>，可能存在<strong>专业采购员</strong>。",
+        item2:
+          "<strong>NextLab</strong>用户在数量上也断层领先，但页面停留时间较短，可能是有<strong>明确购买目标的用户</strong>。",
+        item3:
+          "<strong>消费者终端部门</strong>在用户数量方面排名很高，但<strong>使用不频繁</strong>可能存在<strong>新手用户</strong>。",
+      },
+      followUp: {
+        speaker: "我",
+        message: "是时候从这4个部门进行<strong>深度用户访谈</strong>了",
+      },
     },
     userGroups: {
       title: "用户群体分类",
@@ -831,7 +920,20 @@ const translations = {
       stepsDescription: "从搜索到下单，将步骤从7个减少到5个。",
       efficiencyImprovement: "20%",
       efficiencyLabel: "最低效率提升",
-      efficiencyDescription: "订单处理效率提升了20%。",
+      efficiencyDescription: "订单处理效率最低提升了20%。",
+    },
+    background: {
+      title: "背景",
+      speaker1: {
+        name: "主产品经理",
+        message:
+          "论坛上大家都在说eMall<strong>很难用</strong>。你能帮我看看怎么优化吗？",
+      },
+      speaker2: {
+        name: "我",
+        message:
+          "好的...我分析了问题工单Excel，都是业务流程问题。让我看看<strong>数据</strong>，找一些体验优化的机会...",
+      },
     },
     cta: {
       text1: "请随时",
@@ -1192,6 +1294,62 @@ onUnmounted(() => {
   margin: 0;
 }
 
+.analysis-list {
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #595959;
+  line-height: normal;
+  margin: 0;
+  padding-left: 27px;
+  list-style-type: decimal;
+}
+
+.analysis-list li {
+  margin: 0 0 8px 0;
+  line-height: normal;
+}
+
+.analysis-list li:last-child {
+  margin-bottom: 0;
+}
+
+.analysis-list li strong {
+  font-weight: 600;
+  color: #595959;
+}
+
+/* Follow-up Message styles */
+.follow-up-message {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  justify-content: flex-end;
+  margin-top: 32px;
+  width: 100%;
+}
+
+.follow-up-bubble {
+  background-color: #f4f7ff;
+  border: none;
+  max-width: 1088px;
+  flex: 1;
+}
+
+.follow-up-bubble p {
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #595959;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.follow-up-bubble p strong {
+  font-weight: 600;
+  color: #595959;
+}
+
 /* User Groups section styles */
 .user-groups-section {
   margin: 160px 0;
@@ -1511,7 +1669,7 @@ onUnmounted(() => {
 
 /* Order Analytics Dashboard section styles */
 .order-analytics-dashboard-section {
-  margin-bottom: 32px;
+  margin-bottom: 0;
 }
 
 .dashboard-subtitle {
@@ -1538,7 +1696,7 @@ onUnmounted(() => {
 
 /* Result section styles */
 .result-section {
-  margin: 160px 0 0 0;
+  margin: 0;
   width: 100%;
 }
 
@@ -1621,6 +1779,102 @@ onUnmounted(() => {
   color: #000000;
   line-height: 1.4;
   margin: 0;
+}
+
+/* Background section styles */
+.background-section {
+  margin: 160px 0;
+  width: 100%;
+}
+
+.background-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #000000;
+  margin: 0 0 32px 0;
+  line-height: normal;
+  text-align: left;
+}
+
+.conversation-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.conversation-item {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
+}
+
+.conversation-item:first-child {
+  justify-content: flex-start;
+}
+
+.conversation-item:last-child {
+  justify-content: flex-end;
+}
+
+.speaker-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.speaker-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.speaker-name {
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #595959;
+  margin: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.message-bubble {
+  padding: 16px;
+  border-radius: 8px;
+  max-width: 1088px;
+  flex: 1;
+}
+
+.speaker1-message {
+  background-color: #f4f7ff;
+  border: none;
+}
+
+.speaker2-message {
+  background-color: white;
+  border: 0.8px solid #000000;
+}
+
+.message-bubble p {
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #595959;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.message-bubble p strong {
+  font-weight: 600;
+  color: #595959;
 }
 
 /* Journey Mapping section styles */
@@ -1714,6 +1968,26 @@ onUnmounted(() => {
 
   .challenge-subtitle,
   .analysis-text {
+    font-size: 16px;
+  }
+
+  .analysis-list {
+    font-size: 16px;
+    padding-left: 20px;
+  }
+
+  .follow-up-message {
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .follow-up-bubble {
+    max-width: 100%;
+  }
+
+  .follow-up-bubble p {
     font-size: 16px;
   }
 
@@ -1833,6 +2107,44 @@ onUnmounted(() => {
 
   .metric-description {
     font-size: 12px;
+  }
+
+  .background-section {
+    margin: 80px 0;
+  }
+
+  .background-title {
+    font-size: 20px;
+    margin-bottom: 24px;
+  }
+
+  .conversation-item {
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .conversation-item:first-child,
+  .conversation-item:last-child {
+    justify-content: center;
+  }
+
+  .speaker-avatar {
+    width: 60px;
+    height: 60px;
+  }
+
+  .speaker-name {
+    font-size: 16px;
+  }
+
+  .message-bubble {
+    padding: 12px;
+    max-width: 100%;
+  }
+
+  .message-bubble p {
+    font-size: 16px;
   }
 }
 </style>
