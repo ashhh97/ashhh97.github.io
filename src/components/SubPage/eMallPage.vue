@@ -63,6 +63,74 @@
         <div class="notice-section">
           <p class="notice-text" v-html="currentContent.notice"></p>
         </div>
+
+        <!-- Result Section -->
+        <section class="result-section">
+          <h2 class="result-title">
+            {{ currentContent.result.title }}
+          </h2>
+
+          <!-- UI Image -->
+          <div class="result-image-container">
+            <img
+              src="/src/assets/video/eMall/UI.png"
+              alt="eMall UI Design"
+              class="result-image"
+            />
+          </div>
+
+          <!-- Metrics Grid -->
+          <div class="metrics-grid">
+            <!-- User Satisfaction Score -->
+            <div class="metric-item">
+              <div class="metric-value">
+                <span class="metric-number">{{
+                  currentContent.result.satisfactionScore
+                }}</span>
+                <span class="metric-label">{{
+                  currentContent.result.satisfactionLabel
+                }}</span>
+              </div>
+              <p class="metric-description">
+                {{ currentContent.result.satisfactionDescription }}
+              </p>
+            </div>
+
+            <!-- Steps Reduction -->
+            <div class="metric-item">
+              <div class="metric-value">
+                <span class="metric-number">{{
+                  currentContent.result.stepsReduction
+                }}</span>
+                <span class="metric-arrow">→</span>
+                <span class="metric-number">{{
+                  currentContent.result.stepsAfter
+                }}</span>
+                <span class="metric-label">{{
+                  currentContent.result.stepsLabel
+                }}</span>
+              </div>
+              <p class="metric-description">
+                {{ currentContent.result.stepsDescription }}
+              </p>
+            </div>
+
+            <!-- Efficiency Improvement -->
+            <div class="metric-item">
+              <div class="metric-value">
+                <span class="metric-number">{{
+                  currentContent.result.efficiencyImprovement
+                }}</span>
+                <span class="metric-label">{{
+                  currentContent.result.efficiencyLabel
+                }}</span>
+              </div>
+              <p class="metric-description">
+                {{ currentContent.result.efficiencyDescription }}
+              </p>
+            </div>
+          </div>
+        </section>
       </div>
 
       <!-- Challenge & Solution -->
@@ -145,6 +213,15 @@
             v-html="currentContent.journeyMapping.description2"
           ></p>
         </div>
+
+        <!-- Brands Image -->
+        <div class="brands-image-container">
+          <img
+            src="/src/assets/video/eMall/brands.png"
+            alt="Brand Logos"
+            class="brands-image"
+          />
+        </div>
       </div>
 
       <!-- Problems and Design Solutions -->
@@ -196,6 +273,9 @@
 
         <!-- Smart Product Recommendation Solution -->
         <div class="smart-recommendation-section">
+          <h2 class="time-improvement-title">
+            {{ currentContent.problemsAndSolutions.timeImprovement }}
+          </h2>
           <h3 class="solution-subtitle">
             {{ currentContent.problemsAndSolutions.solutionTitle }}
           </h3>
@@ -270,6 +350,9 @@
 
           <!-- Auto-Generate Solution Section -->
           <div class="auto-generate-section">
+            <h2 class="time-improvement-title">
+              {{ currentContent.features.feature2.timeImprovement }}
+            </h2>
             <h3 class="solution-subtitle">
               {{ currentContent.features.feature2.solutionTitle }}
             </h3>
@@ -342,6 +425,9 @@
 
           <!-- Real-Time Progress and Risk Updates Solution Section -->
           <div class="real-time-updates-section">
+            <h2 class="time-improvement-title">
+              {{ currentContent.features.feature3.timeImprovement }}
+            </h2>
             <h3 class="solution-subtitle">
               {{ currentContent.features.feature3.solutionTitle }}
             </h3>
@@ -408,6 +494,9 @@
 
           <!-- Order Analytics Dashboard Section -->
           <div class="order-analytics-dashboard-section">
+            <h2 class="time-improvement-title">
+              {{ currentContent.features.feature4.timeImprovement }}
+            </h2>
             <h3 class="dashboard-subtitle">
               {{ currentContent.features.feature4.dashboardTitle }}
             </h3>
@@ -424,74 +513,6 @@
             <!-- Solution Description -->
             <div class="solution-description">
               <p>{{ currentContent.features.feature4.dashboardDescription }}</p>
-            </div>
-          </div>
-        </section>
-
-        <!-- Result Section -->
-        <section class="result-section">
-          <h2 class="result-title">
-            {{ currentContent.result.title }}
-          </h2>
-
-          <!-- UI Image -->
-          <div class="result-image-container">
-            <img
-              src="/src/assets/video/eMall/UI.png"
-              alt="eMall UI Design"
-              class="result-image"
-            />
-          </div>
-
-          <!-- Metrics Grid -->
-          <div class="metrics-grid">
-            <!-- User Satisfaction Score -->
-            <div class="metric-item">
-              <div class="metric-value">
-                <span class="metric-number">{{
-                  currentContent.result.satisfactionScore
-                }}</span>
-                <span class="metric-label">{{
-                  currentContent.result.satisfactionLabel
-                }}</span>
-              </div>
-              <p class="metric-description">
-                {{ currentContent.result.satisfactionDescription }}
-              </p>
-            </div>
-
-            <!-- Steps Reduction -->
-            <div class="metric-item">
-              <div class="metric-value">
-                <span class="metric-number">{{
-                  currentContent.result.stepsReduction
-                }}</span>
-                <span class="metric-arrow">→</span>
-                <span class="metric-number">{{
-                  currentContent.result.stepsAfter
-                }}</span>
-                <span class="metric-label">{{
-                  currentContent.result.stepsLabel
-                }}</span>
-              </div>
-              <p class="metric-description">
-                {{ currentContent.result.stepsDescription }}
-              </p>
-            </div>
-
-            <!-- Efficiency Improvement -->
-            <div class="metric-item">
-              <div class="metric-value">
-                <span class="metric-number">{{
-                  currentContent.result.efficiencyImprovement
-                }}</span>
-                <span class="metric-label">{{
-                  currentContent.result.efficiencyLabel
-                }}</span>
-              </div>
-              <p class="metric-description">
-                {{ currentContent.result.efficiencyDescription }}
-              </p>
             </div>
           </div>
         </section>
@@ -568,6 +589,7 @@ const translations = {
           '"Manually adding each line item to the PR is a pain and takes up to 2 hours."',
         feedback2:
           '"Customizing the item categories and descriptions is also challenging."',
+        timeImprovement: "2 hours → 20 mins",
         solutionTitle: "Auto-Generate Purchase Requests from Product Sheets",
         description:
           "Seamlessly converts product sheet Excel files into structured Purchase Requests with a single click. Along the process, it intelligently recommends alternatives for unavailable items, automatically maps products to custom categories, and generates clear product descriptions — making procurement faster, smarter, and more reliable.",
@@ -581,6 +603,7 @@ const translations = {
           '"I have to check the system every day to see if my PR has been converted to a PO, and I\'m always worried about missing deadlines."',
         feedback2:
           "\"It's frustrating when a PR becomes overdue because I didn't check the system in time.\"",
+        timeImprovement: "15 mins → No login required to view",
         solutionTitle: "Real-Time Progress and Risk Updates in Chat",
         description:
           "All procurement-related updates, including purchase request status, purchase order status, and logistics status, will be real-time notified in the company's most frequently used chat software, eliminating the need for procurement staff to log into the system daily to check statuses.",
@@ -592,6 +615,7 @@ const translations = {
           "The user spends half to a full day every two weeks manually exporting, filtering, and analyzing order data in Excel to create reports for their manager.",
         dataReportingFeedback:
           '"Every two weeks, I export all orders, filter for categories my manager cares about, analyze pending PO, inspection, and receipt data, create charts in Excel, and report — it takes half to a full day"',
+        timeImprovement: "4-8 hours → No analysis needed",
         dashboardTitle: "Order Analytics Dashboard",
         dashboardDescription:
           "The Order Dashboard clearly visualizes budget usage and the status of each product category, including items pending a purchase order (PO), pending receipt, and pending inspection. The dashboard also supports customizable metrics, allowing users to arrange the display as they wish.",
@@ -655,6 +679,7 @@ const translations = {
         '"I\'m struggling to choose the right equipment for the department staff. What computer is best for a UX designer?"',
       feedback2:
         '"I have to open multiple browser windows to compare product specifications, which takes over 30 minutes."',
+      timeImprovement: "30 mins → 5 mins",
       solutionTitle: "Smart product recommendation",
       solutionDescription:
         "Procura leverages AI to recommend the most suitable products based on user needs and budget. After a recommendation is made, it automatically redirects users to a detailed comparison page with tailored parameters, which solves both the product selection and parameter comparison problems.",
@@ -664,14 +689,16 @@ const translations = {
       satisfactionScore: "86.39",
       satisfactionLabel: "User Satisfaction Score",
       satisfactionDescription:
-        "Collected 995 valid responses covering 26 questions across 8 modules; average redesign satisfaction scored using the SUS standard.",
+        "Collected feedback from 996 users, with the questionnaire covering 8 modules and 26 questions; the score is calculated using the SUS standard.",
       stepsReduction: "7",
       stepsAfter: "5",
       stepsLabel: "Steps",
-      stepsDescription: "Reduced the search-to-purchase steps from 7 to 5. ",
+      stepsDescription:
+        "The ordering process has been reduced from 7 steps to 5 steps.",
       efficiencyImprovement: "20%",
-      efficiencyLabel: "Efficiency",
-      efficiencyDescription: "Overall procurement efficiency improved by 20%.",
+      efficiencyLabel: "Minimum Efficiency Boost",
+      efficiencyDescription:
+        "Order processing efficiency has increased by 20%.",
     },
     cta: {
       text1: "Please feel free to",
@@ -703,6 +730,7 @@ const translations = {
           "采购人员需手动将表格数据逐项录入采购申请单，单次操作耗时可达两小时，同时还要面临自定义品类和描述的难题。",
         feedback1: '"手动添加每个项目到采购请求中很痛苦，需要2个小时。"',
         feedback2: '"自定义项目类别和描述也很难。"',
+        timeImprovement: "2小时 → 20分钟",
         solutionTitle: "一键从产品表格生成采购请求",
         description:
           "一键将产品表格（Excel）轻松转为结构化采购请求。在此过程中，系统会智能推荐缺货商品的替代选项，自动将产品归类到自定义类别，并生成清晰的产品描述——让采购流程更快速、更智能、更可靠。",
@@ -715,6 +743,7 @@ const translations = {
         feedback1:
           '"我必须每天检查系统，看我的PR是否已转换为PO，我总是担心错过截止日期。"',
         feedback2: '"当PR因为我没有及时检查系统而逾期时，这很令人沮丧。"',
+        timeImprovement: "15分钟 → 无需登录查看",
         solutionTitle: "在聊天中即时查看进度与风险",
         description:
           "所有采购相关的更新——包括采购请求、订单以及物流状态——都会通过公司常用的聊天软件实时推送，让采购人员无需每天登录系统查看状态",
@@ -726,6 +755,7 @@ const translations = {
           "用户每两周花费半天到一整天的时间手动导出、筛选和分析Excel中的订单数据，为领导创建报告。",
         dataReportingFeedback:
           '"每两周，我导出所有订单，筛选领导关心的类别，分析待处理的采购订单、检验和收货数据，在Excel中创建图表并报告——这需要半天到一整天的时间"',
+        timeImprovement: "4-8小时 → 无需分析",
         dashboardTitle: "订单数据看板",
         dashboardDescription:
           "订单仪表板清晰地可视化预算使用情况和每个产品类别的状态，包括待处理采购订单（PO）、待收货和待检验的项目。仪表板还支持可自定义的指标，允许用户自由编排展示内容。",
@@ -784,6 +814,7 @@ const translations = {
       feedback1:
         '"我在为部门员工选择合适的设备时很困扰。什么电脑最适合UX设计师？"',
       feedback2: '"我必须打开多个浏览器窗口来比较产品规格，这需要超过30分钟。"',
+      timeImprovement: "30分钟 → 5分钟",
       solutionTitle: "智能产品推荐",
       solutionDescription:
         "Procura利用AI根据用户需求和预算推荐最合适的产品。做出推荐后，它会自动将用户重定向到具有定制参数的详细比较页面，这解决了产品选择和参数比较的问题。",
@@ -799,8 +830,8 @@ const translations = {
       stepsLabel: "步骤",
       stepsDescription: "从搜索到下单，将步骤从7个减少到5个。",
       efficiencyImprovement: "20%",
-      efficiencyLabel: "效率",
-      efficiencyDescription: "采购整体效率提升20%",
+      efficiencyLabel: "最低效率提升",
+      efficiencyDescription: "订单处理效率提升了20%。",
     },
     cta: {
       text1: "请随时",
@@ -1256,6 +1287,16 @@ onUnmounted(() => {
   margin: 0;
 }
 
+/* Time Improvement Title */
+.time-improvement-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 36px;
+  font-weight: 500;
+  color: #000000;
+  margin: 0 0 32px 0;
+  line-height: normal;
+}
+
 .user-feedback-section {
   display: flex;
   flex-direction: column;
@@ -1497,7 +1538,7 @@ onUnmounted(() => {
 
 /* Result section styles */
 .result-section {
-  margin: 0;
+  margin: 160px 0 0 0;
   width: 100%;
 }
 
@@ -1636,6 +1677,19 @@ onUnmounted(() => {
   margin: 0;
 }
 
+.brands-image-container {
+  margin: 32px 0 0 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.brands-image {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .project-info-card {
@@ -1710,6 +1764,11 @@ onUnmounted(() => {
     font-size: 16px;
   }
 
+  .time-improvement-title {
+    font-size: 28px;
+    margin-bottom: 24px;
+  }
+
   .user-feedback-section .feedback-item p {
     font-size: 14px;
   }
@@ -1749,7 +1808,7 @@ onUnmounted(() => {
   }
 
   .result-section {
-    margin: 80px 0;
+    margin: 80px 0 0 0;
   }
 
   .cta-section {
