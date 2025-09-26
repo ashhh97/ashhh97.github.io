@@ -746,8 +746,8 @@ const translations = {
           description: "Enhance the User Satisfaction",
         },
         {
-          title: "Productivity",
-          description: "Enhance employee productivity",
+          title: "Efficiency",
+          description: "Enhance employee work efficiency",
         },
       ],
     },
@@ -902,8 +902,8 @@ const translations = {
           description: "提升用户满意度",
         },
         {
-          title: "生产力",
-          description: "提升员工生产力",
+          title: "效率",
+          description: "提升员工工作效率",
         },
       ],
     },
