@@ -16,7 +16,6 @@
         <!-- Project Description -->
         <div class="project-description">
           <p>{{ currentContent.description1 }}</p>
-          <p>{{ currentContent.description2 }}</p>
         </div>
 
         <!-- Project Info Card -->
@@ -68,35 +67,43 @@
       <!-- Background Section -->
       <div class="background-section">
         <h2 class="background-title">{{ currentContent.background.title }}</h2>
+        <!-- Conversation Message -->
         <div class="conversation-container">
           <div class="conversation-item">
             <div class="speaker-info">
               <img
-                src="/src/assets/video/eMall/LeadPM.png"
-                alt="Lead PM"
+                :src="currentContent.background.conversation.speaker.avatar"
+                :alt="currentContent.background.conversation.speaker.name"
                 class="speaker-avatar"
               />
               <p class="speaker-name">
-                {{ currentContent.background.speaker1.name }}
+                {{ currentContent.background.conversation.speaker.name }}
               </p>
             </div>
-            <div class="message-bubble speaker1-message">
-              <p v-html="currentContent.background.speaker1.message"></p>
+            <div class="message-bubble speaker-message">
+              <p>{{ currentContent.background.conversation.message }}</p>
             </div>
           </div>
-          <div class="conversation-item">
-            <div class="message-bubble speaker2-message">
-              <p v-html="currentContent.background.speaker2.message"></p>
-            </div>
-            <div class="speaker-info">
-              <img
-                src="/src/assets/video/eMall/Me.png"
-                alt="Me"
-                class="speaker-avatar"
-              />
-              <p class="speaker-name">
-                {{ currentContent.background.speaker2.name }}
-              </p>
+        </div>
+        <div class="goals-section">
+          <p class="goals-title">{{ currentContent.background.goalTitle }}</p>
+          <div class="goals-container">
+            <div
+              v-for="(goal, index) in currentContent.background.goals"
+              :key="index"
+              class="goal-item"
+            >
+              <div class="goal-header">
+                <div class="goal-arrow">
+                  <img
+                    src="/src/assets/arrowup.svg"
+                    alt="Arrow up"
+                    class="arrow-icon"
+                  />
+                </div>
+                <h3 class="goal-title">{{ goal.title }}</h3>
+              </div>
+              <p class="goal-description">{{ goal.description }}</p>
             </div>
           </div>
         </div>
@@ -232,29 +239,20 @@
             />
           </div>
 
-          <!-- Problem Context -->
-          <div class="problem-context">
-            <p>{{ currentContent.problemsAndSolutions.context }}</p>
-          </div>
-
           <!-- User Feedback -->
           <div class="user-feedback-section">
-            <div class="feedback-item">
-              <img
-                src="/src/assets/chat.svg"
-                alt="User feedback"
-                class="feedback-icon"
-              />
-              <p>{{ currentContent.problemsAndSolutions.feedback1 }}</p>
-            </div>
-            <div class="feedback-item">
-              <img
-                src="/src/assets/chat.svg"
-                alt="User feedback"
-                class="feedback-icon"
-              />
-              <p>{{ currentContent.problemsAndSolutions.feedback2 }}</p>
-            </div>
+            <p class="feedback-text">
+              {{ currentContent.problemsAndSolutions.feedback1 }}
+            </p>
+          </div>
+
+          <!-- User Selection Challenge Image -->
+          <div class="user-selection-image-container">
+            <img
+              src="/src/assets/video/eMall/psUser.png"
+              alt="Product Selection User Challenge"
+              class="user-selection-image"
+            />
           </div>
         </div>
 
@@ -309,29 +307,20 @@
               />
             </div>
 
-            <!-- Problem Context -->
-            <div class="problem-context">
-              <p>{{ currentContent.features.feature2.context }}</p>
-            </div>
-
             <!-- User Feedback -->
             <div class="user-feedback-section">
-              <div class="feedback-item">
-                <img
-                  src="/src/assets/chat.svg"
-                  alt="User feedback"
-                  class="feedback-icon"
-                />
-                <p>{{ currentContent.features.feature2.feedback1 }}</p>
-              </div>
-              <div class="feedback-item">
-                <img
-                  src="/src/assets/chat.svg"
-                  alt="User feedback"
-                  class="feedback-icon"
-                />
-                <p>{{ currentContent.features.feature2.feedback2 }}</p>
-              </div>
+              <p class="feedback-text">
+                {{ currentContent.features.feature2.feedback1 }}
+              </p>
+            </div>
+
+            <!-- Video TME Image -->
+            <div class="video-tme-image-container">
+              <img
+                src="/src/assets/video/eMall/TME.png"
+                alt="TME"
+                class="video-tme-image"
+              />
             </div>
           </div>
 
@@ -384,29 +373,20 @@
               />
             </div>
 
-            <!-- Problem Context -->
-            <div class="problem-context">
-              <p>{{ currentContent.features.feature3.context }}</p>
-            </div>
-
             <!-- User Feedback -->
             <div class="user-feedback-section">
-              <div class="feedback-item">
-                <img
-                  src="/src/assets/chat.svg"
-                  alt="User feedback"
-                  class="feedback-icon"
-                />
-                <p>{{ currentContent.features.feature3.feedback1 }}</p>
-              </div>
-              <div class="feedback-item">
-                <img
-                  src="/src/assets/chat.svg"
-                  alt="User feedback"
-                  class="feedback-icon"
-                />
-                <p>{{ currentContent.features.feature3.feedback2 }}</p>
-              </div>
+              <p class="feedback-text">
+                {{ currentContent.features.feature3.feedback1 }}
+              </p>
+            </div>
+
+            <!-- MTOR Image -->
+            <div class="mtor-image-container">
+              <img
+                src="/src/assets/video/eMall/MTOR.png"
+                alt="MTOR"
+                class="mtor-image"
+              />
             </div>
           </div>
 
@@ -459,23 +439,20 @@
               />
             </div>
 
-            <!-- Problem Context -->
-            <div class="problem-context">
-              <p>{{ currentContent.features.feature4.dataReportingContext }}</p>
-            </div>
-
             <!-- User Feedback -->
             <div class="user-feedback-section">
-              <div class="feedback-item">
-                <img
-                  src="/src/assets/chat.svg"
-                  alt="User feedback"
-                  class="feedback-icon"
-                />
-                <p>
-                  {{ currentContent.features.feature4.dataReportingFeedback }}
-                </p>
-              </div>
+              <p class="feedback-text">
+                {{ currentContent.features.feature4.dataReportingFeedback }}
+              </p>
+            </div>
+
+            <!-- MDR Image -->
+            <div class="mdr-image-container">
+              <img
+                src="/src/assets/video/eMall/MDR.png"
+                alt="MDR"
+                class="mdr-image"
+              />
             </div>
           </div>
 
@@ -620,9 +597,7 @@ const translations = {
     title: "eMall Redesign",
     date: "2024.10-2025.7",
     description1:
-      "eMall is the company's internal procurement system and also the platform with the loudest complaints within the company.",
-    description2:
-      "My responsibility is to help the product manager identify pain points (Not caused by business processes) in platform usage and uncover highlight design scenarios.",
+      "eMall is the company's internal procurement platform at Huawei. My responsibility is to help the product manager identify pain points (Not caused by business processes) in platform usage and uncover highlight design scenarios.",
     features: {
       feature1: {
         title: "Product Recommendation",
@@ -638,12 +613,8 @@ const translations = {
       feature2: {
         title: "Auto-Generate Purchase Requests from Product Sheets",
         tediousTitle: "Tedious Manual Entry",
-        context:
-          "Buyers have to manually enter each line item from a table into the PR, a process that can take up to two hours for a large order. This is complicated by the need to customize item categories and descriptions.",
         feedback1:
-          '"Manually adding each line item to the PR is a pain and takes up to 2 hours."',
-        feedback2:
-          '"Customizing the item categories and descriptions is also challenging."',
+          '"After the table is reviewed, I have to add each item into the PR one by one — sometimes 10 lines, sometimes 200, Sometimes the items are even taken off the shelves from the store, I need to find substitutes again — which takes up to two hours. Customizing the item categories and descriptions is also challenging"',
         timeImprovement: "2 hours → 20 mins",
         solutionTitle: "Auto-Generate Purchase Requests from Product Sheets",
         description:
@@ -652,12 +623,8 @@ const translations = {
       feature3: {
         title: "Real-Time Progress and Risk Updates in Chat",
         manualTrackingTitle: "Manual Tracking & Overdue Risk",
-        context:
-          "Buyers have to manually check the status of a purchase request (PR) every day to see if it's been converted into a purchase order (PO), facing the risk of it becoming overdue after three days.",
         feedback1:
-          '"I have to check the system every day to see if my PR has been converted to a PO, and I\'m always worried about missing deadlines."',
-        feedback2:
-          "\"It's frustrating when a PR becomes overdue because I didn't check the system in time.\"",
+          "\"I have to check the system every day to see if my PR has been converted to a PO, and I'm always worried about missing deadlines. It's frustrating when a PR becomes overdue because I didn't check the system in time.\"",
         timeImprovement: "15 mins → No login required to view",
         solutionTitle: "Real-Time Progress and Risk Updates in Chat",
         description:
@@ -666,10 +633,8 @@ const translations = {
       feature4: {
         title: "Manual Data Reporting & Order Analytics Dashboard",
         manualDataReportingTitle: "Manual Data Reporting",
-        dataReportingContext:
-          "The user spends half to a full day every two weeks manually exporting, filtering, and analyzing order data in Excel to create reports for their manager.",
         dataReportingFeedback:
-          '"Every two weeks, I export all orders, filter for categories my manager cares about, analyze pending PO, inspection, and receipt data, create charts in Excel, and report — it takes half to a full day"',
+          '"Every two weeks, I export all orders, filter for categories my manager cares about, analyze pending PO, inspection, and receipt data, create charts in Excel, and report — it takes half to a full day."',
         timeImprovement: "4-8 hours → No analysis needed",
         dashboardTitle: "Order Analytics Dashboard",
         dashboardDescription:
@@ -680,7 +645,7 @@ const translations = {
       team: {
         title: "Team：",
         members: [
-          "1 Main Product Manager",
+          "1 Lead Product Manager",
           "4 Section Product Managers",
           "1 Lead Developer",
           "3+ Section Developers",
@@ -696,7 +661,7 @@ const translations = {
         title: "My Job：",
         tasks: [
           "Discover User Paint Points",
-          "Propose design solutions to the Product Manage",
+          "Propose design solutions to the Product Manager",
           "Deliver end-to-end design",
         ],
       },
@@ -706,9 +671,9 @@ const translations = {
     challengeSection: {
       title: "Challenge & solution",
       dataTracking: {
-        subtitle: "The data tracking for eMall is incomplete：",
+        subtitle: "eMall's data tracking is lacking: ",
         description:
-          " Unlike a traditional e-commerce site, we don't extensively track user retention and conversion or build a full funnel model, as we don't encourage employees to spend heavily. Currently, I can only analyze user behavior using basic data like the number of active users per department, average pageviews per user, and average time on page.",
+          "Currently, I can only analyze basic data such as active users per department, average pageviews per user, and average time on page.",
       },
       analysis: {
         item1:
@@ -742,9 +707,7 @@ const translations = {
       context:
         "During this step, professional buyers select equipment for their departments. They often encounter two major challenges: not knowing how to effectively choose products and struggling with complex parameter comparisons.",
       feedback1:
-        '"I\'m struggling to choose the right equipment for the department staff. What computer is best for a UX designer?"',
-      feedback2:
-        '"I have to open multiple browser windows to compare product specifications, which takes over 30 minutes."',
+        '"I\'m struggling to choose the right equipment for the department staff. I have to open multiple browser windows to compare product specifications, which takes over 30 minutes."',
       timeImprovement: "30 mins → 5 mins",
       solutionTitle: "Smart product recommendation",
       solutionDescription:
@@ -767,17 +730,26 @@ const translations = {
         "Minimum order processing efficiency has increased by 20%.",
     },
     background: {
-      title: "Background",
-      speaker1: {
-        name: "Lead PM",
+      title: "Background & Goal",
+      conversation: {
+        speaker: {
+          name: "Lead PM",
+          avatar: "/src/assets/video/eMall/LeadPM.png",
+        },
         message:
-          "Everyone is saying on the forum that eMall is <strong>difficult to use</strong>. Can you help me figure out how to optimize it?",
+          "Despite the my team continuously iterating the mall based on user needs over the past decade, there are still significant criticisms from users.",
       },
-      speaker2: {
-        name: "Me",
-        message:
-          "Sure... I analyzed the problem tickets Excel, and it's all about business process. Let me take a look at the <strong>data </strong> to find some opportunities for experience optimization...",
-      },
+      goalTitle: "Our goal: ",
+      goals: [
+        {
+          title: "User Satisfaction",
+          description: "Enhance the User Satisfaction",
+        },
+        {
+          title: "Productivity",
+          description: "Enhance employee productivity",
+        },
+      ],
     },
     cta: {
       text1: "Please feel free to",
@@ -789,9 +761,8 @@ const translations = {
   chinese: {
     title: "eMall 重新设计",
     date: "2024.10-2025.7",
-    description1: "eMall是公司的内部采购系统，也是公司内投诉最多的平台。",
-    description2:
-      "我的职责是帮助产品经理识别平台使用中的痛点（非业务流程导致），并发现亮点设计场景。",
+    description1:
+      "eMall是公司的内部采购系统，也是公司内投诉最多的平台。我的职责是帮助产品经理识别平台使用中的痛点（非业务流程导致），并发现亮点设计场景。",
     features: {
       feature1: {
         title: "产品智能推荐",
@@ -805,10 +776,8 @@ const translations = {
       feature2: {
         title: "一键从产品表格生成采购请求",
         tediousTitle: "繁琐的采购申请录入",
-        context:
-          "采购人员需手动将表格数据逐项录入采购申请单，单次操作耗时可达两小时，同时还要面临自定义品类和描述的难题。",
-        feedback1: '"手动添加每个项目到采购请求中很痛苦，需要2个小时。"',
-        feedback2: '"自定义项目类别和描述也很难。"',
+        feedback1:
+          '"表格审核后，我必须逐项将每个项目添加到采购请求中——有时10行，有时200行，有时商品甚至从商店下架，我需要再次寻找替代品——这需要长达两个小时。自定义项目类别和描述也很困难"',
         timeImprovement: "2小时 → 20分钟",
         solutionTitle: "一键从产品表格生成采购请求",
         description:
@@ -817,11 +786,8 @@ const translations = {
       feature3: {
         title: "在聊天中即时查看进度与风险",
         manualTrackingTitle: "手动跟踪逾期风险",
-        context:
-          "采购人员必须每天手动检查采购请求（PR）的状态，看它是否已转换为采购订单（PO），面临三天后逾期的风险。",
         feedback1:
-          '"我必须每天检查系统，看我的PR是否已转换为PO，我总是担心错过截止日期。"',
-        feedback2: '"当PR因为我没有及时检查系统而逾期时，这很令人沮丧。"',
+          '"我必须每天检查系统，看我的PR是否已转换为PO，我总是担心错过截止日期。当PR因为我没有及时检查系统而逾期时，这很令人沮丧。"',
         timeImprovement: "15分钟 → 无需登录查看",
         solutionTitle: "在聊天中即时查看进度与风险",
         description:
@@ -830,10 +796,8 @@ const translations = {
       feature4: {
         title: "手动数据报告与订单分析仪表板",
         manualDataReportingTitle: "手动分析数据并制作报告",
-        dataReportingContext:
-          "用户每两周花费半天到一整天的时间手动导出、筛选和分析Excel中的订单数据，为领导创建报告。",
         dataReportingFeedback:
-          '"每两周，我导出所有订单，筛选领导关心的类别，分析待处理的采购订单、检验和收货数据，在Excel中创建图表并报告——这需要半天到一整天的时间"',
+          '"每两周，我导出所有订单，筛选领导关心的类别，分析待处理的采购订单、检验和收货数据，在Excel中创建图表并报告——这需要半天到一整天的时间。"',
         timeImprovement: "4-8小时 → 无需分析",
         dashboardTitle: "订单数据看板",
         dashboardDescription:
@@ -844,7 +808,7 @@ const translations = {
       team: {
         title: "团队：",
         members: [
-          "1名主产品经理",
+          "1名首席产品经理",
           "4名部门产品经理",
           "1名首席开发人员",
           "3+名部门开发人员",
@@ -866,9 +830,9 @@ const translations = {
     challengeSection: {
       title: "挑战与解决方案",
       dataTracking: {
-        subtitle: "eMall的数据跟踪不完整：",
+        subtitle: "eMall的数据跟踪不足：",
         description:
-          " 与传统的电子商务网站不同，我们不广泛跟踪用户留存和转化率，也不建立完整的漏斗模型，因为我们不鼓励员工大量消费。目前，我只能使用基本数据来分析用户行为，如每个部门的活跃用户数、每个用户的平均页面浏览次数和平均页面停留时间。",
+          "目前，我只能分析基本数据，如每个部门的活跃用户数、每个用户的平均页面浏览次数和平均页面停留时间。",
       },
       analysis: {
         item1:
@@ -901,8 +865,7 @@ const translations = {
       context:
         "在这一阶段，专业采购人员负责为部门员工挑选设备。他们经常面临两大挑战：不知道如何进行有效选型，以及难以进行复杂的参数对比。",
       feedback1:
-        '"我在为部门员工选择合适的设备时很困扰。什么电脑最适合UX设计师？"',
-      feedback2: '"我必须打开多个浏览器窗口来比较产品规格，这需要超过30分钟。"',
+        '"我在为部门员工选择合适的设备时很困扰。我必须打开多个浏览器窗口来比较产品规格，这需要超过30分钟。"',
       timeImprovement: "30分钟 → 5分钟",
       solutionTitle: "智能产品推荐",
       solutionDescription:
@@ -923,17 +886,26 @@ const translations = {
       efficiencyDescription: "订单处理效率最低提升了20%。",
     },
     background: {
-      title: "背景",
-      speaker1: {
-        name: "主产品经理",
+      title: "背景与目标",
+      conversation: {
+        speaker: {
+          name: "主产品经理",
+          avatar: "/src/assets/video/eMall/LeadPM.png",
+        },
         message:
-          "论坛上大家都在说eMall<strong>很难用</strong>。你能帮我看看怎么优化吗？",
+          "尽管我的团队在过去十年中持续根据用户需求迭代商城，但用户仍然存在大量批评。",
       },
-      speaker2: {
-        name: "我",
-        message:
-          "好的...我分析了问题工单Excel，都是业务流程问题。让我看看<strong>数据</strong>，找一些体验优化的机会...",
-      },
+      goalTitle: "我们的目标：",
+      goals: [
+        {
+          title: "用户满意度",
+          description: "提升用户满意度",
+        },
+        {
+          title: "生产力",
+          description: "提升员工生产力",
+        },
+      ],
     },
     cta: {
       text1: "请随时",
@@ -1432,6 +1404,19 @@ onUnmounted(() => {
   height: auto;
 }
 
+.user-selection-image-container {
+  margin: 32px 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.user-selection-image {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
 .problem-context {
   margin: 32px 0 8px 0;
 }
@@ -1460,6 +1445,17 @@ onUnmounted(() => {
   flex-direction: column;
   gap: 8px;
   margin: 0;
+  text-align: center;
+}
+
+.feedback-text {
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #595959;
+  line-height: normal;
+  margin: 0;
+  font-style: italic;
 }
 
 .user-feedback-section .feedback-item {
@@ -1589,6 +1585,19 @@ onUnmounted(() => {
   height: auto;
 }
 
+.video-tme-image-container {
+  margin: 32px 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.video-tme-image {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
 /* Tedious Manual Entry section styles */
 .tedious-manual-section {
   margin-bottom: 32px;
@@ -1635,6 +1644,19 @@ onUnmounted(() => {
   height: auto;
 }
 
+.mtor-image-container {
+  margin: 32px 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.mtor-image {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
 /* Real-Time Updates Solution section styles */
 .real-time-updates-section {
   margin-top: 0;
@@ -1662,6 +1684,19 @@ onUnmounted(() => {
 }
 
 .report-image {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+.mdr-image-container {
+  margin: 32px 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.mdr-image {
   width: 100%;
   max-width: 100%;
   height: auto;
@@ -1790,7 +1825,7 @@ onUnmounted(() => {
 .background-title {
   font-family: "Poppins", sans-serif;
   font-size: 24px;
-  font-weight: 600;
+  font-weight: 500;
   color: #000000;
   margin: 0 0 32px 0;
   line-height: normal;
@@ -1803,7 +1838,7 @@ onUnmounted(() => {
   gap: 16px;
   width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 0 auto 32px auto;
 }
 
 .conversation-item {
@@ -1811,14 +1846,7 @@ onUnmounted(() => {
   align-items: center;
   gap: 32px;
   width: 100%;
-}
-
-.conversation-item:first-child {
   justify-content: flex-start;
-}
-
-.conversation-item:last-child {
-  justify-content: flex-end;
 }
 
 .speaker-info {
@@ -1853,28 +1881,89 @@ onUnmounted(() => {
   flex: 1;
 }
 
-.speaker1-message {
+.speaker-message {
   background-color: #f4f7ff;
   border: none;
-}
-
-.speaker2-message {
-  background-color: white;
-  border: 0.8px solid #000000;
 }
 
 .message-bubble p {
   font-family: "Poppins", sans-serif;
   font-size: 18px;
-  font-weight: 400;
+  font-weight: 500;
   color: #595959;
   margin: 0;
-  line-height: 1.4;
+  line-height: normal;
 }
 
-.message-bubble p strong {
-  font-weight: 600;
+.goals-section {
+  width: 100%;
+}
+
+.goals-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
   color: #595959;
+  margin: 0 0 32px 0;
+  line-height: normal;
+}
+
+.goals-container {
+  display: flex;
+  gap: 32px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.goal-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.goal-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.goal-arrow {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.goal-arrow .arrow-icon {
+  width: 32px;
+  height: 32px;
+  display: block;
+}
+
+.goal-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 48px;
+  font-weight: 600;
+  color: #000000;
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: -1.056px;
+  flex: 1;
+  white-space: nowrap;
+}
+
+.goal-description {
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #000000;
+  line-height: 1.4;
+  margin: 0;
 }
 
 /* Journey Mapping section styles */
@@ -2124,11 +2213,6 @@ onUnmounted(() => {
     align-items: center;
   }
 
-  .conversation-item:first-child,
-  .conversation-item:last-child {
-    justify-content: center;
-  }
-
   .speaker-avatar {
     width: 60px;
     height: 60px;
@@ -2144,6 +2228,42 @@ onUnmounted(() => {
   }
 
   .message-bubble p {
+    font-size: 16px;
+  }
+
+  .goals-title {
+    font-size: 16px;
+    margin-bottom: 24px;
+  }
+
+  .goals-container {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .goal-header {
+    gap: 16px;
+  }
+
+  .goal-arrow {
+    width: 32px;
+    height: 32px;
+  }
+
+  .goal-arrow .arrow-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .goal-title {
+    white-space: nowrap;
+  }
+
+  .goal-title {
+    font-size: 32px;
+  }
+
+  .goal-description {
     font-size: 16px;
   }
 }
