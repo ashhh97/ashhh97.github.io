@@ -21,11 +21,21 @@
               <p class="video-name">{{ video.name }}</p>
               <div class="section-video">
                 <div class="video-label">{{ `1-${index + 1}` }}</div>
+                <!-- Loading placeholder -->
+                <div
+                  v-if="!videoLoaded[`emall-${index}`]"
+                  class="video-loading"
+                >
+                  <div class="loading-spinner"></div>
+                  <p class="loading-text">{{ currentContent.loadingText }}</p>
+                </div>
+                <!-- Video element -->
                 <video
+                  v-show="videoLoaded[`emall-${index}`]"
                   :src="video.src"
                   controls
                   preload="metadata"
-                  @loadstart="onVideoLoadStart"
+                  @loadeddata="onVideoLoaded(`emall-${index}`)"
                   @error="onVideoError"
                 >
                   {{ currentContent.videoNotSupported }}
@@ -47,11 +57,18 @@
               <p class="video-name">{{ video.name }}</p>
               <div class="section-video">
                 <div class="video-label">{{ `2-${index + 1}` }}</div>
+                <!-- Loading placeholder -->
+                <div v-if="!videoLoaded[`ai-${index}`]" class="video-loading">
+                  <div class="loading-spinner"></div>
+                  <p class="loading-text">{{ currentContent.loadingText }}</p>
+                </div>
+                <!-- Video element -->
                 <video
+                  v-show="videoLoaded[`ai-${index}`]"
                   :src="video.src"
                   controls
                   preload="metadata"
-                  @loadstart="onVideoLoadStart"
+                  @loadeddata="onVideoLoaded(`ai-${index}`)"
                   @error="onVideoError"
                 >
                   {{ currentContent.videoNotSupported }}
@@ -76,6 +93,9 @@ import Header from "../Header.vue";
 
 // Language state
 const currentLanguage = ref("english");
+
+// Video loading state
+const videoLoaded = ref({});
 
 // Video data
 const emallVideos = ref([
@@ -113,6 +133,7 @@ const translations = {
     emallTitle: "eMall Project Videos",
     aiAssistantTitle: "AI Assistant Project Videos",
     videoNotSupported: "Your browser does not support the video tag.",
+    loadingText: "Loading video...",
     footer: "@2025YINGZHANG",
   },
   chinese: {
@@ -120,6 +141,7 @@ const translations = {
     emallTitle: "eMall 项目视频",
     aiAssistantTitle: "AI助手项目视频",
     videoNotSupported: "您的浏览器不支持视频标签。",
+    loadingText: "视频加载中...",
     footer: "@2025张颖",
   },
 };
@@ -133,8 +155,9 @@ const handleLanguageChange = (language) => {
 };
 
 // Video event handlers
-const onVideoLoadStart = () => {
-  console.log("Video loading started");
+const onVideoLoaded = (videoKey) => {
+  videoLoaded.value[videoKey] = true;
+  console.log(`Video ${videoKey} loaded successfully`);
 };
 
 const onVideoError = (event) => {
@@ -239,6 +262,46 @@ onMounted(() => {
   object-fit: cover;
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.video-loading {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #e0e0e0;
+  border-top: 3px solid #000000;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+.loading-text {
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #666666;
+  margin: 0;
+  text-align: center;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .video-name {
