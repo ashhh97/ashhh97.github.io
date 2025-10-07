@@ -99,30 +99,22 @@ const videoLoaded = ref({});
 
 // Video data
 const emallVideos = ref([
-  { name: "AI Recommendation", src: "/src/assets/video/eMall/AIRec.mp4" },
+  { name: "AI Recommendation", src: "/assets/AIRec-fCWV6LF9.mp4" },
   {
     name: "PR Assistance",
-    src: "/src/assets/video/eMall/PRassistanceBlack.mp4",
+    src: "/assets/PRassistanceBlack-Bsd-lhVh.mp4",
   },
-  { name: "Message Feature", src: "/src/assets/video/eMall/Message2.mp4" },
+  { name: "Message Feature", src: "/assets/Message2-sCDUjKpM.mp4" },
 ]);
 
 const aiAssistantVideos = ref([
   {
-    name: "报告生成 (Report Generation)",
-    src: "/src/assets/video/AI Assistant/报告生成.mp4",
-  },
-  {
     name: "大宗行情 (Bulk Market)",
-    src: "/src/assets/video/AI Assistant/大宗行情.mp4",
+    src: "/assets/大宗行情-C5xmzi8e.mp4",
   },
   {
     name: "价格查询 (Price Query)",
-    src: "/src/assets/video/AI Assistant/价格查询.mp4",
-  },
-  {
-    name: "报告检查 (Report Check)",
-    src: "/src/assets/video/AI Assistant/报告检查.mp4",
+    src: "/assets/价格查询-BK7k7Avy.mp4",
   },
 ]);
 
