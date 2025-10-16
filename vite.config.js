@@ -45,6 +45,8 @@ export default defineConfig(({ mode }) => ({
         drop_debugger: true,
       },
     },
+    // 为GitHub Pages生成404.html
+    copyPublicDir: true,
   },
   server: {
     port: 5173,

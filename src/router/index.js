@@ -7,8 +7,6 @@ const HarmonyOSPage = () => import("../components/SubPage/HarmonyOSPage.vue");
 const WarehousePage = () => import("../components/SubPage/WarehousePage.vue");
 const ReportAssistantPage = () =>
   import("../components/SubPage/ReportAssistantPage.vue");
-const VideoCollectionPage = () =>
-  import("../components/SubPage/VideoCollectionPage.vue");
 
 const routes = [
   {
@@ -35,11 +33,6 @@ const routes = [
     path: "/reportassistant",
     name: "ReportAssistant",
     component: ReportAssistantPage,
-  },
-  {
-    path: "/videocollection",
-    name: "VideoCollection",
-    component: VideoCollectionPage,
   },
 ];
 

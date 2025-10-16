@@ -124,6 +124,7 @@
   aspect-ratio: 1920 / 1080;
   overflow: hidden;
   position: relative;
+  margin: 0 auto;
 }
 
 .section-video video {

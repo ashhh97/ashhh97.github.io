@@ -3,6 +3,12 @@
     <!-- Header -->
     <Header @language-change="handleLanguageChange" />
 
+    <!-- Floating Menu -->
+    <FloatingMenu
+      :menuItems="floatingMenuItems"
+      :menuTitle="currentContent.menuTitle"
+    />
+
     <!-- Main Content -->
     <main class="main-content animate-fade-in-up">
       <!-- Page Title -->
@@ -65,7 +71,7 @@
       </div>
 
       <!-- Background Section -->
-      <div class="background-section">
+      <div id="background" class="background-section">
         <h2 class="background-title">{{ currentContent.background.title }}</h2>
         <!-- Conversation Message -->
         <div class="conversation-container">
@@ -110,7 +116,7 @@
       </div>
 
       <!-- Challenge & Solution -->
-      <div class="challenge-solution-section">
+      <div id="challenge" class="challenge-solution-section">
         <h2 class="challenge-title">
           {{ currentContent.challengeSection.title }}
         </h2>
@@ -162,7 +168,7 @@
       </div>
 
       <!-- Classified User Groups -->
-      <div class="user-groups-section">
+      <div id="user-groups" class="user-groups-section">
         <h2 class="user-groups-title">
           {{ currentContent.userGroups.title }}
         </h2>
@@ -182,7 +188,7 @@
       </div>
 
       <!-- Journey Mapping Section -->
-      <div class="journey-mapping-section">
+      <div id="journey-mapping" class="journey-mapping-section">
         <h2 class="journey-title">
           {{ currentContent.journeyMapping.title }}
         </h2>
@@ -219,7 +225,7 @@
       </div>
 
       <!-- Problems and Design Solutions -->
-      <div class="problems-solutions-section">
+      <div id="solutions" class="problems-solutions-section">
         <h2 class="problems-solutions-title">
           {{ currentContent.problemsAndSolutions.title }}
         </h2>
@@ -231,7 +237,7 @@
           </h3>
 
           <!-- User Journey for Product Selection -->
-          <div class="product-selection-journey">
+          <div id="step1-product-selection" class="product-selection-journey">
             <img
               src="/src/assets/video/eMall/ptoductSelection.png"
               alt="Product Selection Journey"
@@ -293,7 +299,7 @@
         <!-- Feature 2 -->
         <section class="content-section">
           <!-- Tedious Manual Entry Section -->
-          <div class="tedious-manual-section">
+          <div id="step5-submit-pr" class="tedious-manual-section">
             <h3 class="tedious-subtitle">
               {{ currentContent.features.feature2.tediousTitle }}
             </h3>
@@ -359,7 +365,7 @@
         <!-- Feature 3 -->
         <section class="content-section">
           <!-- Manual Tracking & Overdue Risk Section -->
-          <div class="manual-tracking-section">
+          <div id="step6-track-order" class="manual-tracking-section">
             <h3 class="manual-tracking-subtitle">
               {{ currentContent.features.feature3.manualTrackingTitle }}
             </h3>
@@ -425,7 +431,7 @@
         <!-- Feature 4 - Manual Data Reporting & Order Analytics Dashboard -->
         <section class="content-section">
           <!-- Manual Data Reporting Section -->
-          <div class="manual-data-reporting-section">
+          <div id="step7-analyze-order" class="manual-data-reporting-section">
             <h3 class="manual-data-reporting-subtitle">
               {{ currentContent.features.feature4.manualDataReportingTitle }}
             </h3>
@@ -482,7 +488,7 @@
         </section>
 
         <!-- Result Section -->
-        <section class="result-section">
+        <section id="result" class="result-section">
           <h2 class="result-title">
             {{ currentContent.result.title }}
           </h2>
@@ -577,6 +583,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from "vue";
 import Header from "../Header.vue";
+import FloatingMenu from "../FloatingMenu.vue";
 
 // Language state
 const currentLanguage = ref("english");
@@ -591,11 +598,177 @@ const videosLoaded = ref(new Set());
 const observers = ref([]);
 let firstVideoPlayed = false;
 
+// Computed property for floating menu items
+const floatingMenuItems = computed(() => {
+  const menuData = currentContent.value.menuItems || {};
+  return [
+    {
+      id: "background",
+      label: menuData.background || "Background",
+      expanded: false,
+    },
+    {
+      id: "challenge",
+      label: menuData.challenge || "Challenge",
+      expanded: false,
+    },
+    {
+      id: "user-groups",
+      label: menuData.userGroups || "User Groups",
+      expanded: false,
+    },
+    {
+      id: "journey-mapping",
+      label: menuData.journeyMapping || "Journey Mapping",
+      expanded: false,
+      children: [
+        {
+          id: "step1-product-selection",
+          label: menuData.step1 || "Step1: Product Selection",
+          expanded: false,
+          children: [
+            {
+              id: null,
+              label: menuData.step1Challenge || "Product selection challenges",
+            },
+            {
+              id: "homepage-cluttered",
+              label: menuData.homepageCluttered || "Homepage info is cluttered",
+            },
+            {
+              id: "search-mismatch",
+              label:
+                menuData.searchMismatch || "Search results don't match keyword",
+            },
+            {
+              id: "card-irrelevant",
+              label:
+                menuData.cardIrrelevant ||
+                "Product Card display irrelevant information",
+            },
+            {
+              id: "browser-comparison",
+              label:
+                menuData.browserComparison ||
+                "Open multiple browsers for comparison",
+            },
+          ],
+        },
+        {
+          id: "step3-reordering",
+          label: menuData.step3 || "Step3: Reordering",
+          expanded: false,
+          children: [
+            {
+              id: "navigation-lengthy",
+              label:
+                menuData.navigationLengthy ||
+                "Navigating Product paths is lengthy",
+            },
+          ],
+        },
+        {
+          id: "step5-submit-pr",
+          label: menuData.step5 || "Step5: Submit PR",
+          expanded: false,
+          children: [
+            {
+              id: "copy-product-info",
+              label:
+                menuData.copyProductInfo ||
+                "Copying Product info is time-consuming",
+            },
+            {
+              id: "choose-alternatives",
+              label:
+                menuData.chooseAlternatives ||
+                "Choosing alternatives for expired products",
+            },
+            {
+              id: "customize-categories",
+              label:
+                menuData.customizeCategories ||
+                "Customizing categories and descriptions",
+            },
+            {
+              id: "add-click-paths",
+              label:
+                menuData.addClickPaths ||
+                "Adding product click paths in PR draft",
+            },
+          ],
+        },
+        {
+          id: "step6-track-order",
+          label: menuData.step6 || "Step6: Track Order",
+          expanded: false,
+          children: [
+            {
+              id: "manual-login",
+              label:
+                menuData.manualLogin || "Manually logging in to check risks",
+            },
+          ],
+        },
+        {
+          id: "step7-analyze-order",
+          label: menuData.step7 || "Step7: Analyze Order",
+          expanded: false,
+          children: [
+            {
+              id: "manual-analysis",
+              label:
+                menuData.manualAnalysis ||
+                "Manual analysis of order information",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: "solutions",
+      label: menuData.solutions || "Solutions",
+      expanded: false,
+    },
+    {
+      id: "result",
+      label: menuData.result || "Result",
+      expanded: false,
+    },
+  ];
+});
+
 // Translation data
 const translations = {
   english: {
     title: "eMall Redesign",
     date: "2024.10-2025.7",
+    menuTitle: "Contents",
+    menuItems: {
+      background: "Background & Goal",
+      challenge: "Challenge & Solution",
+      userGroups: "User Groups",
+      journeyMapping: "Journey Mapping",
+      solutions: "Design Solutions",
+      result: "Result",
+      step1: "Step1: Product Selection",
+      step1Challenge: "Product selection challenges",
+      homepageCluttered: "Homepage info is cluttered",
+      searchMismatch: "Search results don't match keyword",
+      cardIrrelevant: "Product Card display irrelevant information",
+      browserComparison: "Open multiple browsers for comparison",
+      step3: "Step3: Reordering",
+      navigationLengthy: "Navigating Product paths is lengthy",
+      step5: "Step5: Submit PR",
+      copyProductInfo: "Copying Product info is time-consuming",
+      chooseAlternatives: "Choosing alternatives for expired products",
+      customizeCategories: "Customizing categories and descriptions",
+      addClickPaths: "Adding product click paths in PR draft",
+      step6: "Step6: Track Order",
+      manualLogin: "Manually logging in to check risks",
+      step7: "Step7: Analyze Order",
+      manualAnalysis: "Manual analysis of order information",
+    },
     description1:
       "eMall is the company's internal procurement platform at Huawei. My responsibility is to help the product manager identify pain points (Not caused by business processes) in platform usage and uncover highlight design scenarios.",
     features: {
@@ -761,6 +934,32 @@ const translations = {
   chinese: {
     title: "eMall 重新设计",
     date: "2024.10-2025.7",
+    menuTitle: "目录",
+    menuItems: {
+      background: "背景与目标",
+      challenge: "挑战与解决方案",
+      userGroups: "用户群体分类",
+      journeyMapping: "定位耗时环节",
+      solutions: "设计解决方案",
+      result: "结果",
+      step1: "步骤1：产品选择",
+      step1Challenge: "产品选择挑战",
+      homepageCluttered: "主页信息杂乱",
+      searchMismatch: "搜索结果与关键词不匹配",
+      cardIrrelevant: "产品卡片显示不相关信息",
+      browserComparison: "打开多个浏览器进行比较",
+      step3: "步骤3：重新订购",
+      navigationLengthy: "导航产品路径耗时过长",
+      step5: "步骤5：提交采购申请",
+      copyProductInfo: "复制产品信息耗时",
+      chooseAlternatives: "为过期产品选择替代品",
+      customizeCategories: "自定义类别和描述",
+      addClickPaths: "在采购申请草稿中添加产品点击路径",
+      step6: "步骤6：跟踪订单",
+      manualLogin: "手动登录检查风险",
+      step7: "步骤7：分析订单",
+      manualAnalysis: "手动分析订单信息",
+    },
     description1:
       "eMall是公司的内部采购系统，也是公司内投诉最多的平台。我的职责是帮助产品经理识别平台使用中的痛点（非业务流程导致），并发现亮点设计场景。",
     features: {

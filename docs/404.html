@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./assets/ying-BRW4dUix.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- DNS预解析和预连接 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- 字体预加载 -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+
+    <title>Ying Zhang Portfolio 2025</title>
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WF1BPL2EF5"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-WF1BPL2EF5");
+    </script>
+    <script type="module" crossorigin src="./assets/index-C5PQdeKA.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/vendor-Cs99JA16.js" />
+    <link
+      rel="modulepreload"
+      crossorigin
+      href="./assets/components-BTXpdKp1.js"
+    />
+    <link
+      rel="stylesheet"
+      crossorigin
+      href="./assets/components-B4wrCF9m.css"
+    />
+    <link rel="stylesheet" crossorigin href="./assets/index-D0Gu3qVI.css" />
+
+    <script>
+      // GitHub Pages SPA 重定向脚本
+      // 这个脚本会捕获404错误并重定向到主页，让Vue Router处理路由
+      var pathSegmentsToKeep = 0;
+
+      var l = window.location;
+      l.replace(
+        l.protocol +
+          "//" +
+          l.hostname +
+          (l.port ? ":" + l.port : "") +
+          l.pathname
+            .split("/")
+            .slice(0, 1 + pathSegmentsToKeep)
+            .join("/") +
+          "/?/" +
+          l.pathname
+            .slice(1)
+            .split("/")
+            .slice(pathSegmentsToKeep)
+            .join("/")
+            .replace(/&/g, "~and~") +
+          (l.search ? "&" + l.search.slice(1).replace(/&/g, "~and~") : "") +
+          l.hash
+      );
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+</html>

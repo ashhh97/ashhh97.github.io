@@ -3,6 +3,12 @@
     <!-- Header -->
     <Header @language-change="handleLanguageChange" />
 
+    <!-- Floating Menu -->
+    <FloatingMenu
+      :menuItems="floatingMenuItems"
+      :menuTitle="currentContent.menuTitle"
+    />
+
     <!-- Main Content -->
     <main class="main-content animate-fade-in-up">
       <div class="content-container">
@@ -63,7 +69,7 @@
         </div>
 
         <!-- Problem Analysis Section -->
-        <div class="problem-analysis-section">
+        <div id="problem-analysis" class="problem-analysis-section">
           <h2 class="problem-title">
             {{ currentContent.problemAnalysis.title }}
           </h2>
@@ -95,7 +101,7 @@
         <!-- Content Sections -->
         <div class="content-sections">
           <!-- Problems and Design Solutions Section -->
-          <section class="problems-solutions-section">
+          <section id="solutions" class="problems-solutions-section">
             <h2 class="problems-solutions-title">
               {{ currentContent.sections.problemsAndSolutions.title }}
             </h2>
@@ -231,7 +237,7 @@
         </div>
 
         <!-- Result Section -->
-        <div class="result-section">
+        <div id="result" class="result-section">
           <h2 class="result-title">{{ currentContent.result.title }}</h2>
           <div class="metrics-grid">
             <!-- Report Quality -->
@@ -304,6 +310,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from "vue";
 import Header from "../Header.vue";
+import FloatingMenu from "../FloatingMenu.vue";
 
 // Language state
 const currentLanguage = ref("english");
@@ -318,6 +325,20 @@ const videosLoaded = ref(new Set());
 const observers = ref([]);
 let firstVideoPlayed = false;
 
+// Computed property for floating menu items
+const floatingMenuItems = computed(() => [
+  {
+    id: "problem-analysis",
+    label:
+      currentContent.value.menuItems?.problemAnalysis || "Problem Analysis",
+  },
+  {
+    id: "solutions",
+    label: currentContent.value.menuItems?.solutions || "Solutions",
+  },
+  { id: "result", label: currentContent.value.menuItems?.result || "Result" },
+]);
+
 // Translation object
 const translations = {
   english: {
@@ -325,6 +346,12 @@ const translations = {
     description:
       "Each time CEG selects a specific supplier, a deck report explaining the selection rationale must be prepared. Gathering and analyzing the necessary data for the report is time-consuming. The Report Assistant is designed to streamline this process and improve report-writing efficiency.",
     date: "2025.4",
+    menuTitle: "Contents",
+    menuItems: {
+      problemAnalysis: "Problem Analysis",
+      solutions: "Design Solutions",
+      result: "Result",
+    },
     projectInfo: {
       team: {
         title: "Team：",
@@ -414,6 +441,12 @@ const translations = {
     description:
       "CEG在每次选择特定供应商时，都需要准备一份PPT报告来说明选择理由。但在撰写过程中，数据的查找与分析往往耗时较长。报告助手的目标就是简化这一流程，提升报告撰写的效率。",
     date: "2025.4",
+    menuTitle: "目录",
+    menuItems: {
+      problemAnalysis: "问题分析",
+      solutions: "设计解决方案",
+      result: "结果",
+    },
     projectInfo: {
       team: {
         title: "Team：",

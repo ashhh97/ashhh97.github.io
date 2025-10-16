@@ -25,9 +25,6 @@
     <!-- Footer -->
     <div class="footer">
       <p>@2025YINGZHANG</p>
-      <router-link to="/videocollection" class="video-button">
-        {{ content[currentLanguage].videoButtonText }}
-      </router-link>
     </div>
   </div>
 </template>
@@ -53,7 +50,6 @@ const content = {
     uxWork: "UX Work",
     playground: "Playground",
     aboutMe: "About Me",
-    videoButtonText: "Video Collection",
     // copyright: "@2025YINGZHANG",
   },
   chinese: {
@@ -66,7 +62,6 @@ const content = {
     uxWork: "用户体验作品",
     playground: "实验项目",
     aboutMe: "关于我",
-    videoButtonText: "视频合集",
     copyright: "@2025张颖",
   },
 };
@@ -333,37 +328,6 @@ onMounted(() => {
   margin: 0;
 }
 
-.video-button {
-  font-family: "Poppins", sans-serif;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: normal;
-  color: transparent;
-  text-decoration: none;
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  padding: 8px 16px;
-  transition: none;
-  cursor: default;
-  opacity: 0;
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 120px;
-  height: 36px;
-  pointer-events: auto;
-}
-
-.video-button:hover {
-  color: transparent;
-  border-color: transparent;
-  background: transparent;
-  opacity: 0;
-  cursor: default;
-}
-
 /* Responsive adjustments */
 @media (max-width: 1200px) {
   .projects-grid,
@@ -402,14 +366,6 @@ onMounted(() => {
     flex-direction: column;
     gap: 16px;
     text-align: center;
-  }
-
-  .video-button {
-    position: relative;
-    right: auto;
-    top: auto;
-    transform: none;
-    margin-top: 16px;
   }
 }
 </style>
