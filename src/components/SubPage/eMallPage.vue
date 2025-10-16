@@ -94,11 +94,7 @@
         <div class="goals-section">
           <p class="goals-title">{{ currentContent.background.goalTitle }}</p>
           <div class="goals-container">
-            <div
-              v-for="(goal, index) in currentContent.background.goals"
-              :key="index"
-              class="goal-item"
-            >
+            <div class="goal-item">
               <div class="goal-header">
                 <div class="goal-arrow">
                   <img
@@ -107,9 +103,13 @@
                     class="arrow-icon"
                   />
                 </div>
-                <h3 class="goal-title">{{ goal.title }}</h3>
+                <h3 class="goal-title">
+                  {{ currentContent.background.goals[1].title }}
+                </h3>
               </div>
-              <p class="goal-description">{{ goal.description }}</p>
+              <p class="goal-description">
+                {{ currentContent.background.goals[1].description }}
+              </p>
             </div>
           </div>
         </div>
@@ -2111,15 +2111,15 @@ onUnmounted(() => {
   display: flex;
   gap: 32px;
   width: 100%;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 .goal-item {
-  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 8px;
   align-items: flex-start;
+  max-width: 600px;
 }
 
 .goal-header {

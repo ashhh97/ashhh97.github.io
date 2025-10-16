@@ -45,6 +45,29 @@ const router = createRouter({
   },
 });
 
+// GitHub Pages SPA 重定向处理
+router.beforeEach((to, from, next) => {
+  // 检查URL是否包含GitHub Pages重定向格式
+  if (window.location.search.includes("/?/")) {
+    // 提取重定向的路径
+    const redirectPath = window.location.search
+      .replace("/?/", "")
+      .replace(/~and~/g, "&");
+
+    // 清理URL，移除查询参数
+    const cleanUrl = window.location.origin + redirectPath;
+
+    // 使用replace避免在历史记录中留下重定向URL
+    window.history.replaceState({}, "", cleanUrl);
+
+    // 导航到正确的路由
+    next(redirectPath);
+    return;
+  }
+
+  next();
+});
+
 // Google Analytics页面追踪
 router.afterEach((to, from) => {
   // 确保gtag函数存在

@@ -50,11 +50,11 @@
     <script>
       // GitHub Pages SPA 重定向脚本
       // 这个脚本会捕获404错误并重定向到主页，让Vue Router处理路由
-      var pathSegmentsToKeep = 0;
-
-      var l = window.location;
-      l.replace(
-        l.protocol +
+      (function () {
+        var pathSegmentsToKeep = 0;
+        var l = window.location;
+        var redirect =
+          l.protocol +
           "//" +
           l.hostname +
           (l.port ? ":" + l.port : "") +
@@ -70,8 +70,17 @@
             .join("/")
             .replace(/&/g, "~and~") +
           (l.search ? "&" + l.search.slice(1).replace(/&/g, "~and~") : "") +
-          l.hash
-      );
+          l.hash;
+
+        // 检查是否已经是重定向后的URL格式
+        if (l.search.includes("/?/")) {
+          // 如果已经是重定向格式，直接返回，让Vue Router处理
+          return;
+        }
+
+        // 执行重定向
+        l.replace(redirect);
+      })();
     </script>
   </head>
   <body>
