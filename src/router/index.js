@@ -37,7 +37,8 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
+  // 使用绝对路径，与 vite.config.js 的 base 保持一致
+  history: createWebHistory("/"),
   routes,
   scrollBehavior(to, from, savedPosition) {
     // Always scroll to top on navigation
@@ -47,24 +48,44 @@ const router = createRouter({
 
 // GitHub Pages SPA 重定向处理
 router.beforeEach((to, from, next) => {
-  // 检查URL是否包含GitHub Pages重定向格式
+  // 检查URL是否包含GitHub Pages重定向格式（从404.html重定向过来的）
   if (window.location.search.includes("/?/")) {
     // 提取重定向的路径
-    const redirectPath = window.location.search
-      .replace("/?/", "")
+    // 格式: /?/emall 或 /?/path/to/page
+    let path = window.location.search
+      .replace(/^.*\/\?\/+/, "") // 移除 /?/ 及之前的内容
       .replace(/~and~/g, "&");
 
+    // 如果没有找到路径，尝试从原始路径名获取
+    if (
+      !path &&
+      window.location.pathname !== "/" &&
+      window.location.pathname !== "/404.html"
+    ) {
+      path = window.location.pathname;
+    }
+
+    // 确保路径以 / 开头
+    if (path && !path.startsWith("/")) {
+      path = "/" + path;
+    }
+
     // 清理URL，移除查询参数
-    const cleanUrl = window.location.origin + redirectPath;
+    const cleanUrl = window.location.origin + (path || "/");
 
     // 使用replace避免在历史记录中留下重定向URL
     window.history.replaceState({}, "", cleanUrl);
 
-    // 导航到正确的路由
-    next(redirectPath);
+    // 导航到正确的路由（如果路径存在且不是404页面）
+    if (path && path !== "/404.html") {
+      next(path);
+    } else {
+      next("/");
+    }
     return;
   }
 
+  // 正常路由导航
   next();
 });
 

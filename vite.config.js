@@ -5,7 +5,9 @@ import viteCompression from "vite-plugin-compression";
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: "./",
+  // 使用绝对路径，适配 GitHub Pages 根目录部署
+  // 如果部署在子目录（如 /repo-name/），改为 base: "/repo-name/"
+  base: "/",
   plugins: [
     vue(),
     viteCompression({
