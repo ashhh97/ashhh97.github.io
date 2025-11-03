@@ -37,8 +37,9 @@ const routes = [
 ];
 
 const router = createRouter({
-  // 使用绝对路径，与 vite.config.js 的 base 保持一致
-  history: createWebHistory("/"),
+  // 必须与 vite.config.js 的 base 保持一致
+  // GitHub Pages 部署在 /yzPortfolio2025/ 子目录
+  history: createWebHistory("/yzPortfolio2025/"),
   routes,
   scrollBehavior(to, from, savedPosition) {
     // Always scroll to top on navigation
