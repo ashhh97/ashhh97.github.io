@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { startLoading, finishLoading } from "../utils/loadingState.js";
 
 // 使用动态导入实现代码分割
 const Homepage = () => import("../components/Homepage.vue");
@@ -47,6 +48,8 @@ const router = createRouter({
 
 // GitHub Pages SPA 重定向处理
 router.beforeEach((to, from, next) => {
+  // 开始显示加载动画
+  startLoading();
   // 检查URL是否包含GitHub Pages重定向格式
   if (window.location.search.includes("/?/")) {
     // 提取重定向的路径
@@ -70,6 +73,8 @@ router.beforeEach((to, from, next) => {
 
 // Google Analytics页面追踪
 router.afterEach((to, from) => {
+  // 轻微延迟，待组件挂载完成后结束加载
+  setTimeout(() => finishLoading(), 200);
   // 确保gtag函数存在
   if (typeof gtag !== "undefined") {
     gtag("config", "G-WF1BPL2EF5", {
