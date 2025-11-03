@@ -597,17 +597,6 @@
                     ></iframe>
                   </div>
                 </div>
-                <video
-                  v-else-if="step.solutionVideo === 'message2Video'"
-                  controls
-                  muted
-                  loop
-                  preload="metadata"
-                  @loadeddata="handleVideoLoaded"
-                >
-                  <source :src="message2Video" type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
               </div>
 
               <!-- Solution Video Code (for AI Rec Video) -->
@@ -905,13 +894,10 @@ import productSelectionImg from "../../assets/video/eMall/ptoductSelection.png";
 import psUserImg from "../../assets/video/eMall/psUser.png";
 import similarItemsImg from "../../assets/video/eMall/similarItems.png";
 import cardRenewImg from "../../assets/video/eMall/cardRenew.png";
-import airRecVideo from "../../assets/video/eMall/AIRec.mp4";
 import copyItemImg from "../../assets/video/eMall/copyItem.png";
 import tmeImg from "../../assets/video/eMall/TME.png";
-import prAssistanceVideo from "../../assets/video/eMall/PRassistanceBlack.mp4";
 import messageImg from "../../assets/video/eMall/message.png";
 import mtorImg from "../../assets/video/eMall/MTOR.png";
-import message2Video from "../../assets/video/eMall/Message2.mp4";
 import dataReportImg from "../../assets/video/eMall/data report.png";
 import mdrImg from "../../assets/video/eMall/MDR.png";
 import dashboardImg from "../../assets/video/eMall/dashboard.png";
@@ -1009,15 +995,7 @@ const hasSolutionContent = (step) => {
   );
 };
 
-// Video refs
-const video1 = ref(null);
-const video2 = ref(null);
-const video3 = ref(null);
-
-// Video autoplay management
-const videosLoaded = ref(new Set());
 const observers = ref([]);
-let firstVideoPlayed = false;
 
 // Problem analysis box refs
 const problemBoxRefs = ref([]);
@@ -1760,45 +1738,6 @@ const handleLanguageChange = (language) => {
   currentLanguage.value = language;
 };
 
-// Video loading handler
-const handleVideoLoaded = (event) => {
-  const video = event.target;
-  videosLoaded.value.add(video);
-
-  // Play first video immediately when loaded
-  if (!firstVideoPlayed && video === video1.value) {
-    video.play().catch((e) => console.log("Auto-play prevented:", e));
-    firstVideoPlayed = true;
-  }
-};
-
-// Intersection Observer for lazy video playback
-const createVideoObserver = (video) => {
-  if (!video || !("IntersectionObserver" in window)) return;
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-          // Video is 50% visible, try to play
-          if (videosLoaded.value.has(video)) {
-            video.play().catch((e) => console.log("Auto-play prevented:", e));
-          }
-        } else {
-          // Video is not visible, pause to save resources
-          video.pause();
-        }
-      });
-    },
-    {
-      threshold: [0, 0.5, 1],
-      rootMargin: "50px",
-    }
-  );
-
-  observer.observe(video);
-  observers.value.push(observer);
-};
 
 // Initialize language from localStorage on mount
 // Load Vimeo player script if not already loaded
@@ -1827,15 +1766,6 @@ onMounted(() => {
 
   // Load Vimeo script for embedded videos
   loadVimeoScript();
-
-  // Setup video observers after DOM is ready
-  setTimeout(() => {
-    [video1.value, video2.value, video3.value].forEach((video) => {
-      if (video) {
-        createVideoObserver(video);
-      }
-    });
-  }, 100);
 
   // Add ESC key listener for closing fullscreen
   document.addEventListener("keydown", handleEscapeKey);

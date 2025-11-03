@@ -11,54 +11,61 @@
 
     <!-- Main Content -->
     <main class="main-content animate-fade-in-up">
-      <div class="content-container">
+      <div id="overview" class="content-container">
         <!-- Page Title -->
         <h1 class="page-title">{{ currentContent.title }}</h1>
 
         <!-- Project Date -->
         <p class="project-date">{{ currentContent.date }}</p>
 
-        <!-- Project Description -->
-        <p class="project-description">
-          {{ currentContent.description }}
-        </p>
+        <!-- Overview Section -->
+        <div class="overview-container">
+          <!-- Overview Image -->
+          <div class="overview-section">
+            <img
+              src="/src/assets/video/AI Assistant/overviewImg.png"
+              alt="Project Overview"
+              class="overview-image"
+            />
+          </div>
 
-        <!-- Project Info Card -->
-        <div class="project-info-card">
-          <div class="info-section">
-            <h3 class="info-title">
-              {{ currentContent.projectInfo.team.title }}
-            </h3>
-            <div class="info-content">
-              <p
-                v-for="member in currentContent.projectInfo.team.members"
-                :key="member"
-              >
-                {{ member }}
-              </p>
-            </div>
-          </div>
-          <div class="info-section">
-            <h3 class="info-title">
-              {{ currentContent.projectInfo.role.title }}
-            </h3>
-            <div class="info-content">
-              <p>{{ currentContent.projectInfo.role.description }}</p>
-            </div>
-          </div>
-          <div class="info-section">
-            <h3 class="info-title">
-              {{ currentContent.projectInfo.job.title }}
-            </h3>
-            <div class="info-content">
-              <ol>
-                <li
-                  v-for="task in currentContent.projectInfo.job.tasks"
-                  :key="task"
+          <!-- Project Info Card -->
+          <div class="project-info-card">
+            <div class="info-section">
+              <h3 class="info-title">
+                {{ currentContent.projectInfo.team.title }}
+              </h3>
+              <div class="info-content">
+                <p
+                  v-for="member in currentContent.projectInfo.team.members"
+                  :key="member"
                 >
-                  {{ task }}
-                </li>
-              </ol>
+                  {{ member }}
+                </p>
+              </div>
+            </div>
+            <div class="info-section">
+              <h3 class="info-title">
+                {{ currentContent.projectInfo.role.title }}
+              </h3>
+              <div class="info-content">
+                <p>{{ currentContent.projectInfo.role.description }}</p>
+              </div>
+            </div>
+            <div class="info-section">
+              <h3 class="info-title">
+                {{ currentContent.projectInfo.job.title }}
+              </h3>
+              <div class="info-content">
+                <ol>
+                  <li
+                    v-for="task in currentContent.projectInfo.job.tasks"
+                    :key="task"
+                  >
+                    {{ task }}
+                  </li>
+                </ol>
+              </div>
             </div>
           </div>
         </div>
@@ -74,6 +81,11 @@
             {{ currentContent.problemAnalysis.title }}
           </h2>
 
+          <!-- Background Description -->
+          <p class="background-description">
+            {{ currentContent.description }}
+          </p>
+
           <!-- User Feedback with Head Icon -->
           <div class="user-feedback-section">
             <div class="feedback-icon-container">
@@ -88,20 +100,37 @@
             </p>
           </div>
 
-          <!-- Pie Chart Image -->
-          <div class="pie-chart-container">
+          <!-- Background Image -->
+          <div class="background-image-container">
             <img
-              src="/src/assets/video/AI Assistant/piechart.png"
-              alt="Problem Analysis Pie Chart"
-              class="pie-chart-image"
+              src="/src/assets/video/AI Assistant/backgroundImg.png"
+              alt="Background"
+              class="background-image"
             />
+          </div>
+        </div>
+
+        <!-- Time Analysis Section -->
+        <div id="time-analysis" class="time-analysis-section">
+          <h2 class="time-analysis-title">
+            {{ currentContent.timeAnalysis.title }}
+          </h2>
+          <div class="time-analysis-content">
+            <!-- Chart/Visualization Area -->
+            <div class="time-chart-container">
+              <img
+                :src="getChartImage()"
+                alt="Time Analysis Chart"
+                class="time-chart-image"
+              />
+            </div>
           </div>
         </div>
 
         <!-- Content Sections -->
         <div class="content-sections">
           <!-- Problems and Design Solutions Section -->
-          <section id="solutions" class="problems-solutions-section">
+          <section id="problem1-solution1" class="problems-solutions-section">
             <h2 class="problems-solutions-title">
               {{ currentContent.sections.problemsAndSolutions.title }}
             </h2>
@@ -129,21 +158,16 @@
               <h3 class="solution-subtitle">
                 {{ currentContent.sections.section1.title }}
               </h3>
-              <div class="section-video">
-                <video
-                  ref="video1"
-                  controls
-                  muted
-                  loop
-                  preload="metadata"
-                  @loadeddata="handleVideoLoaded"
-                >
-                  <source
-                    src="/src/assets/video/AI%20Assistant/大宗行情.mp4"
-                    type="video/mp4"
-                  />
-                  Your browser does not support the video tag.
-                </video>
+              <div class="section-video vimeo-embed-container">
+                <div class="vimeo-wrapper">
+                  <iframe
+                    src="https://player.vimeo.com/video/1125080585?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                    frameborder="0"
+                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    title="大宗行情"
+                  ></iframe>
+                </div>
               </div>
               <div class="solution-description">
                 <p>{{ currentContent.sections.section1.description1 }}</p>
@@ -152,7 +176,7 @@
           </section>
 
           <!-- Section 2: Smart Connected Price Lookup -->
-          <section class="problems-solutions-section">
+          <section id="problem2-solution2" class="problems-solutions-section">
             <!-- Problem Section -->
             <div class="problem-section">
               <h3 class="problem-subtitle">
@@ -171,21 +195,16 @@
               <h3 class="solution-subtitle">
                 {{ currentContent.sections.section2.title }}
               </h3>
-              <div class="section-video">
-                <video
-                  ref="video2"
-                  controls
-                  muted
-                  loop
-                  preload="metadata"
-                  @loadeddata="handleVideoLoaded"
-                >
-                  <source
-                    src="/src/assets/video/AI%20Assistant/价格查询.mp4"
-                    type="video/mp4"
-                  />
-                  Your browser does not support the video tag.
-                </video>
+              <div class="section-video vimeo-embed-container">
+                <div class="vimeo-wrapper">
+                  <iframe
+                    src="https://player.vimeo.com/video/1125080567?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                    frameborder="0"
+                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    title="价格查询"
+                  ></iframe>
+                </div>
               </div>
               <div class="solution-description">
                 <p>{{ currentContent.sections.section2.description1 }}</p>
@@ -194,7 +213,7 @@
           </section>
 
           <!-- Section 3: Intelligent Report Checking -->
-          <section class="problems-solutions-section">
+          <section id="problem3-solution3" class="problems-solutions-section">
             <!-- Problem Section -->
             <div class="problem-section">
               <h3 class="problem-subtitle">
@@ -213,21 +232,16 @@
               <h3 class="solution-subtitle">
                 {{ currentContent.sections.section3.title }}
               </h3>
-              <div class="section-video">
-                <video
-                  ref="video3"
-                  controls
-                  muted
-                  loop
-                  preload="metadata"
-                  @loadeddata="handleVideoLoaded"
-                >
-                  <source
-                    src="/src/assets/video/AI%20Assistant/价格查询.mp4"
-                    type="video/mp4"
-                  />
-                  Your browser does not support the video tag.
-                </video>
+              <div class="section-video vimeo-embed-container">
+                <div class="vimeo-wrapper">
+                  <iframe
+                    src="https://player.vimeo.com/video/1125080602?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                    frameborder="0"
+                    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    title="报告检查"
+                  ></iframe>
+                </div>
               </div>
               <div class="solution-description">
                 <p>{{ currentContent.sections.section3.description1 }}</p>
@@ -308,36 +322,46 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from "vue";
+import { ref, onMounted, computed } from "vue";
 import Header from "../Header.vue";
 import FloatingMenu from "../FloatingMenu.vue";
+import piechartImg from "../../assets/video/AI Assistant/piechart.png";
+import pieChartCNImg from "../../assets/video/AI Assistant/pieChartCN.png";
 
 // Language state
 const currentLanguage = ref("english");
 
-// Video refs
-const video1 = ref(null);
-const video2 = ref(null);
-const video3 = ref(null);
-
-// Video autoplay management
-const videosLoaded = ref(new Set());
-const observers = ref([]);
-let firstVideoPlayed = false;
-
 // Computed property for floating menu items
-const floatingMenuItems = computed(() => [
-  {
-    id: "problem-analysis",
-    label:
-      currentContent.value.menuItems?.problemAnalysis || "Problem Analysis",
-  },
-  {
-    id: "solutions",
-    label: currentContent.value.menuItems?.solutions || "Solutions",
-  },
-  { id: "result", label: currentContent.value.menuItems?.result || "Result" },
-]);
+const floatingMenuItems = computed(() => {
+  const menuData = currentContent.value.menuItems || {};
+  return [
+    {
+      id: "overview",
+      label: menuData.overview || "Overview",
+    },
+    {
+      id: "problem-analysis",
+      label: menuData.problemAnalysis || "Background",
+    },
+    {
+      id: "time-analysis",
+      label: menuData.timeAnalysis || "Time Analysis",
+    },
+    {
+      id: "problem1-solution1",
+      label: menuData.problem1Solution1 || "Problem1 & Solution 1",
+    },
+    {
+      id: "problem2-solution2",
+      label: menuData.problem2Solution2 || "Problem2 & Solution 2",
+    },
+    {
+      id: "problem3-solution3",
+      label: menuData.problem3Solution3 || "Problem3 & Solution 3",
+    },
+    { id: "result", label: menuData.result || "Result" },
+  ];
+});
 
 // Translation object
 const translations = {
@@ -348,8 +372,13 @@ const translations = {
     date: "2025.4",
     menuTitle: "Contents",
     menuItems: {
-      problemAnalysis: "Problem Analysis",
+      overview: "Overview",
+      problemAnalysis: "Background",
+      timeAnalysis: "Time Analysis",
       solutions: "Design Solutions",
+      problem1Solution1: "Problem1 & Solution 1",
+      problem2Solution2: "Problem2 & Solution 2",
+      problem3Solution3: "Problem3 & Solution 3",
       result: "Result",
     },
     projectInfo: {
@@ -379,9 +408,12 @@ const translations = {
     notice:
       "<strong>Notice:</strong> Due to the confidential nature of the project, all data and business logic have been <strong>anonymized</strong>, and the design mockups have been <strong>completely reconstructed</strong> by me.",
     problemAnalysis: {
-      title: "It takes 3 days to write a supplier selection report",
+      title: "Background",
       feedback:
         '"The main pain point is data collection and analysis — frequently gathering data across different systems and platforms, manually analyzing and summarizing it, and then writing it into reports."',
+    },
+    timeAnalysis: {
+      title: "It takes 3 days to write a supplier selection report",
     },
     sections: {
       problemsAndSolutions: {
@@ -443,8 +475,13 @@ const translations = {
     date: "2025.4",
     menuTitle: "目录",
     menuItems: {
-      problemAnalysis: "问题分析",
+      overview: "概览",
+      problemAnalysis: "背景",
+      timeAnalysis: "时间分析",
       solutions: "设计解决方案",
+      problem1Solution1: "问题1 & 解决方案1",
+      problem2Solution2: "问题2 & 解决方案2",
+      problem3Solution3: "问题3 & 解决方案3",
       result: "结果",
     },
     projectInfo: {
@@ -474,9 +511,12 @@ const translations = {
     notice:
       "<strong>注意：</strong>由于项目的保密性质，所有数据和业务逻辑都已被<strong>匿名化</strong>，设计稿已由我<strong>完全重新构建</strong>。",
     problemAnalysis: {
-      title: "撰写供应商选择报告需要3天时间",
+      title: "背景",
       feedback:
         '"主要痛点是数据收集和分析——经常需要从不同系统和平台收集数据，手动分析和总结，然后写入报告。"',
+    },
+    timeAnalysis: {
+      title: "撰写供应商选择报告需要3天时间",
     },
     sections: {
       problemsAndSolutions: {
@@ -538,44 +578,24 @@ const handleLanguageChange = (language) => {
   currentLanguage.value = language;
 };
 
-// Video loading handler
-const handleVideoLoaded = (event) => {
-  const video = event.target;
-  videosLoaded.value.add(video);
-
-  // Play first video immediately when loaded
-  if (!firstVideoPlayed && video === video1.value) {
-    video.play().catch((e) => console.log("Auto-play prevented:", e));
-    firstVideoPlayed = true;
-  }
+// Get chart image based on current language
+const getChartImage = () => {
+  return currentLanguage.value === "chinese" ? pieChartCNImg : piechartImg;
 };
 
-// Intersection Observer for lazy video playback
-const createVideoObserver = (video) => {
-  if (!video || !("IntersectionObserver" in window)) return;
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-          // Video is 50% visible, try to play
-          if (videosLoaded.value.has(video)) {
-            video.play().catch((e) => console.log("Auto-play prevented:", e));
-          }
-        } else {
-          // Video is not visible, pause to save resources
-          video.pause();
-        }
-      });
-    },
-    {
-      threshold: [0, 0.5, 1],
-      rootMargin: "50px",
-    }
-  );
-
-  observer.observe(video);
-  observers.value.push(observer);
+// Load Vimeo player script if not already loaded
+const loadVimeoScript = () => {
+  if (
+    document.querySelector(
+      'script[src="https://player.vimeo.com/api/player.js"]'
+    )
+  ) {
+    return;
+  }
+  const script = document.createElement("script");
+  script.src = "https://player.vimeo.com/api/player.js";
+  script.async = true;
+  document.body.appendChild(script);
 };
 
 // Initialize language from localStorage on mount
@@ -588,21 +608,13 @@ onMounted(() => {
     currentLanguage.value = savedLanguage;
   }
 
-  // Setup video observers after DOM is ready
-  setTimeout(() => {
-    [video1.value, video2.value, video3.value].forEach((video) => {
-      if (video) {
-        createVideoObserver(video);
-      }
-    });
-  }, 100);
+  // Load Vimeo script for embedded videos
+  loadVimeoScript();
+
+  // No local video observers needed - all videos are Vimeo embeds
 });
 
-// Cleanup observers on unmount
-onUnmounted(() => {
-  observers.value.forEach((observer) => observer.disconnect());
-  observers.value = [];
-});
+// No cleanup needed - all videos are Vimeo embeds
 </script>
 
 <style scoped>
@@ -704,6 +716,26 @@ onUnmounted(() => {
   margin-bottom: 0;
 }
 
+/* Content container - scroll to top for overview */
+.content-container#overview {
+  scroll-margin-top: 100px;
+}
+
+/* Overview section styles */
+.overview-section {
+  margin: 32px 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.overview-image {
+  width: 60%;
+  max-width: 720px;
+  height: auto;
+  border-radius: 16px;
+}
+
 /* Notice section styles */
 .notice-section {
   margin: 32px 0 0 0;
@@ -757,15 +789,61 @@ onUnmounted(() => {
   flex: 1;
 }
 
-.pie-chart-container {
+.background-description {
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #595959;
+  line-height: normal;
+  margin: 0 0 32px 0;
+}
+
+.background-image-container {
   width: 100%;
+  margin-top: 32px;
   display: flex;
   justify-content: center;
 }
 
-.pie-chart-image {
+.background-image {
   width: 100%;
-  max-width: 800px;
+  height: auto;
+  aspect-ratio: 2282 / 1314;
+  object-fit: contain;
+}
+
+/* Time Analysis section styles */
+.time-analysis-section {
+  margin: 160px 0 0 0;
+  width: 100%;
+  scroll-margin-top: 100px;
+}
+
+.time-analysis-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #000000;
+  margin: 0 0 32px 0;
+  line-height: normal;
+}
+
+.time-analysis-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.time-chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.time-chart-image {
+  width: 100%;
   height: auto;
 }
 
@@ -773,6 +851,7 @@ onUnmounted(() => {
 .problems-solutions-section {
   margin: 0;
   width: 100%;
+  scroll-margin-top: 100px;
 }
 
 /* First problems-solutions-section should have margin-top to separate from problem-analysis-section */
@@ -836,8 +915,11 @@ onUnmounted(() => {
 /* Override section-video margin for this page */
 .section-video {
   margin: 32px 0;
-  border-radius: 16px;
   overflow: hidden;
+  width: 100%;
+  max-width: 1000px;
+  aspect-ratio: 1920 / 968;
+  position: relative;
 }
 
 /* Ensure video has 16px border-radius */
@@ -846,6 +928,28 @@ onUnmounted(() => {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* Vimeo embed styles */
+.vimeo-embed-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.vimeo-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.vimeo-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 /* Time Improvement Title */
@@ -967,12 +1071,25 @@ onUnmounted(() => {
     white-space: normal;
   }
 
+  .overview-section {
+    margin: 24px 0;
+  }
+
+  .overview-image {
+    border-radius: 12px;
+  }
+
   .problem-analysis-section {
     margin: 80px 0;
   }
 
   .problem-title {
     font-size: 20px;
+    margin-bottom: 24px;
+  }
+
+  .background-description {
+    font-size: 16px;
     margin-bottom: 24px;
   }
 
@@ -1051,6 +1168,24 @@ onUnmounted(() => {
   .time-improvement-title {
     font-size: 28px;
     margin-bottom: 24px;
+  }
+
+  .time-analysis-section {
+    margin: 80px 0;
+  }
+
+  .time-analysis-title {
+    font-size: 20px;
+    margin-bottom: 24px;
+  }
+
+  .time-analysis-content {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .time-chart-image {
+    max-width: 100%;
   }
 }
 </style>

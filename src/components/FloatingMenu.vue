@@ -695,7 +695,7 @@ onUnmounted(() => {
 }
 
 .menu-item.active .menu-link {
-  background: #f4f7ff;
+  background: #f5f5f5;
   color: #000000;
   font-weight: 500;
 }
@@ -708,7 +708,7 @@ onUnmounted(() => {
   transform: translateY(-50%);
   width: 3px;
   height: 60%;
-  background: #1853dd;
+  background: #333333;
   border-radius: 2px;
 }
 
@@ -778,7 +778,7 @@ onUnmounted(() => {
 }
 
 .submenu-item.active .submenu-link {
-  background: #f4f7ff;
+  background: #f5f5f5;
   color: #000000;
   font-weight: 500;
 }
@@ -791,7 +791,7 @@ onUnmounted(() => {
   transform: translateY(-50%);
   width: 2px;
   height: 60%;
-  background: #4285f4;
+  background: #333333;
   border-radius: 1px;
 }
 
