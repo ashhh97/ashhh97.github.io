@@ -5,9 +5,7 @@ import viteCompression from "vite-plugin-compression";
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => ({
-  // GitHub Pages 子目录部署配置
-  // gh-pages 会部署在 https://username.github.io/yzPortfolio2025/
-  base: "/yzPortfolio2025/",
+  base: "./",
   plugins: [
     vue(),
     viteCompression({

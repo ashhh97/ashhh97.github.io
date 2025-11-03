@@ -48,22 +48,11 @@
     <link rel="stylesheet" crossorigin href="./assets/index-D0Gu3qVI.css" />
 
     <script>
-      // GitHub Pages SPA 重定向脚本 - 适配子目录部署
-      // 项目部署在 /yzPortfolio2025/ 子目录
+      // GitHub Pages SPA 重定向脚本
+      // 这个脚本会捕获404错误并重定向到主页，让Vue Router处理路由
       (function () {
-        // pathSegmentsToKeep = 1 表示保留第一个路径段（仓库名）
-        // 例如：/yzPortfolio2025/emall -> 保留 /yzPortfolio2025/
-        var pathSegmentsToKeep = 1;
+        var pathSegmentsToKeep = 0;
         var l = window.location;
-
-        // 检查是否已经是重定向后的URL格式
-        if (l.search.includes("/?/")) {
-          // 如果已经是重定向格式，直接返回，让Vue Router处理
-          return;
-        }
-
-        // 构建重定向URL
-        // 从 /yzPortfolio2025/emall 转换为 /yzPortfolio2025/?/emall
         var redirect =
           l.protocol +
           "//" +
@@ -82,6 +71,12 @@
             .replace(/&/g, "~and~") +
           (l.search ? "&" + l.search.slice(1).replace(/&/g, "~and~") : "") +
           l.hash;
+
+        // 检查是否已经是重定向后的URL格式
+        if (l.search.includes("/?/")) {
+          // 如果已经是重定向格式，直接返回，让Vue Router处理
+          return;
+        }
 
         // 执行重定向
         l.replace(redirect);
