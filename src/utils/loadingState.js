@@ -6,8 +6,10 @@ const state = reactive({
 });
 
 let progressTimer = null;
+let loadingStartTime = 0;
 
 export function startLoading() {
+  loadingStartTime = Date.now();
   state.active = true;
   // 先重置为 0，然后平滑过渡到初始值
   state.progress = 0;
@@ -33,14 +35,20 @@ export function finishLoading() {
     progressTimer = null;
   }
   state.progress = 100;
-  // 等待淡出动画完成（400ms）后再隐藏，进度条保持在 100%
+
+  // 计算已显示的时间
+  const elapsed = Date.now() - loadingStartTime;
+  const minDisplay = 800; // 最小显示 800ms
+  const remainingTime = Math.max(0, minDisplay - elapsed);
+
+  // 等待淡出动画完成（400ms）+ 剩余最小显示时间
   setTimeout(() => {
     state.active = false;
     // 只在完全隐藏后才重置进度，避免跳变
     setTimeout(() => {
       state.progress = 0;
     }, 100);
-  }, 450);
+  }, 450 + remainingTime);
 }
 
 export default state;

@@ -73,8 +73,12 @@ router.beforeEach((to, from, next) => {
 
 // Google Analytics页面追踪
 router.afterEach((to, from) => {
+  // 对于首次加载（from.name === null），给更多时间
+  const isInitialLoad = from.name === null;
+  const delay = isInitialLoad ? 400 : 200;
+
   // 轻微延迟，待组件挂载完成后结束加载
-  setTimeout(() => finishLoading(), 200);
+  setTimeout(() => finishLoading(), delay);
   // 确保gtag函数存在
   if (typeof gtag !== "undefined") {
     gtag("config", "G-WF1BPL2EF5", {
