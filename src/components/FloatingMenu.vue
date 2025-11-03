@@ -1,19 +1,13 @@
 <template>
+  <!-- Compact Menu Button (for screens < 1600px) -->
   <div
-    class="floating-menu"
-    :class="{ collapsed: isCollapsed, dragging: isDragging }"
-    :style="menuStyle"
-    ref="floatingMenu"
+    v-if="showCompactButton"
+    class="floating-menu-compact"
+    @click="toggleMenuExpanded"
   >
-    <!-- Toggle Button -->
-    <button
-      class="menu-toggle"
-      @click="toggleMenu"
-      :aria-label="isCollapsed ? 'Expand menu' : 'Collapse menu'"
-    >
+    <div class="menu-icon-button">
       <svg
-        class="toggle-icon"
-        :class="{ rotated: !isCollapsed }"
+        v-if="!isMenuExpanded"
         width="20"
         height="20"
         viewBox="0 0 20 20"
@@ -21,36 +15,55 @@
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          d="M7.5 5L12.5 10L7.5 15"
+          d="M2.5 5H17.5M2.5 10H17.5M2.5 15H17.5"
           stroke="currentColor"
-          stroke-width="2"
+          stroke-width="1.5"
+          stroke-linecap="round"
+        />
+      </svg>
+      <svg
+        v-else
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M15 5L5 15M5 5L15 15"
+          stroke="currentColor"
+          stroke-width="1.5"
           stroke-linecap="round"
           stroke-linejoin="round"
         />
       </svg>
-    </button>
+    </div>
+  </div>
+
+  <!-- Full Menu (for screens >= 1600px) -->
+  <div
+    v-if="shouldShowMenu"
+    class="floating-menu"
+    ref="floatingMenu"
+    :class="{ collapsed: isCollapsed }"
+  >
+    <!-- Hover Zone (matches menu content size) -->
+    <div
+      ref="hoverZone"
+      class="hover-zone"
+      :style="hoverZoneStyle"
+      @mouseenter="handleHoverEnter"
+      @mouseleave="handleHoverLeave"
+    ></div>
 
     <!-- Menu Content -->
-    <div class="menu-content" v-show="!isCollapsed">
-      <div class="menu-header" @mousedown="startDrag" @touchstart="startDrag">
-        <h3 class="menu-title">{{ menuTitle }}</h3>
-        <div class="drag-handle" title="Drag to move">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle cx="4" cy="4" r="1.5" fill="currentColor" />
-            <circle cx="12" cy="4" r="1.5" fill="currentColor" />
-            <circle cx="4" cy="8" r="1.5" fill="currentColor" />
-            <circle cx="12" cy="8" r="1.5" fill="currentColor" />
-            <circle cx="4" cy="12" r="1.5" fill="currentColor" />
-            <circle cx="12" cy="12" r="1.5" fill="currentColor" />
-          </svg>
-        </div>
-      </div>
+    <div
+      ref="menuContent"
+      class="menu-content"
+      :class="{ collapsed: isCollapsed }"
+      @mouseenter="handleHoverEnter"
+      @mouseleave="handleHoverLeave"
+    >
       <nav class="menu-nav">
         <ul class="menu-list">
           <li
@@ -66,26 +79,21 @@
             <!-- Main menu item -->
             <div class="menu-item-content">
               <a
-                v-if="item.id"
+                v-if="item.id && (!item.children || item.children.length === 0)"
                 :href="`#${item.id}`"
                 class="menu-link"
                 @click.prevent="scrollToSection(item.id)"
               >
                 {{ item.label }}
               </a>
-              <span v-else class="menu-link menu-link-disabled">
-                {{ item.label }}
-              </span>
-
-              <!-- Expand/Collapse button for items with children -->
               <button
-                v-if="item.children && item.children.length > 0"
-                class="expand-button"
+                v-else-if="item.children && item.children.length > 0"
+                class="menu-link menu-link-button"
                 @click="toggleExpand(item)"
-                :aria-label="item.expanded ? 'Collapse' : 'Expand'"
               >
+                {{ item.label }}
                 <svg
-                  class="expand-icon"
+                  class="expand-icon-inline"
                   :class="{ expanded: item.expanded }"
                   width="12"
                   height="12"
@@ -102,6 +110,126 @@
                   />
                 </svg>
               </button>
+              <span v-else class="menu-link menu-link-disabled">
+                {{ item.label }}
+              </span>
+            </div>
+
+            <!-- Submenu items -->
+            <ul
+              v-if="item.children && item.children.length > 0"
+              class="submenu-list"
+              :class="{ expanded: item.expanded }"
+            >
+              <li
+                v-for="child in item.children"
+                :key="child.id"
+                class="submenu-item"
+                :class="{ active: activeSection === child.id }"
+              >
+                <a
+                  v-if="child.id"
+                  :href="`#${child.id}`"
+                  class="submenu-link"
+                  @click.prevent="scrollToSection(child.id)"
+                >
+                  {{ child.label }}
+                </a>
+                <span v-else class="submenu-link submenu-link-disabled">
+                  {{ child.label }}
+                </span>
+
+                <!-- Third level items -->
+                <ul
+                  v-if="child.children && child.children.length > 0"
+                  class="submenu-list level-3"
+                >
+                  <li
+                    v-for="grandchild in child.children"
+                    :key="grandchild.id"
+                    class="submenu-item level-3"
+                    :class="{ active: activeSection === grandchild.id }"
+                  >
+                    <a
+                      v-if="grandchild.id"
+                      :href="`#${grandchild.id}`"
+                      class="submenu-link level-3"
+                      @click.prevent="scrollToSection(grandchild.id)"
+                    >
+                      {{ grandchild.label }}
+                    </a>
+                    <span
+                      v-else
+                      class="submenu-link submenu-link-disabled level-3"
+                    >
+                      {{ grandchild.label }}
+                    </span>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Compact Menu Content (for screens < 1600px) -->
+  <div
+    v-if="showCompactButton && isMenuExpanded"
+    class="floating-menu-compact-content"
+    ref="compactMenuContent"
+  >
+    <div class="menu-content-compact">
+      <nav class="menu-nav">
+        <ul class="menu-list">
+          <li
+            v-for="item in menuItems"
+            :key="item.id"
+            class="menu-item"
+            :class="{
+              active: activeSection === item.id,
+              'has-children': item.children && item.children.length > 0,
+              expanded: item.expanded,
+            }"
+          >
+            <!-- Main menu item -->
+            <div class="menu-item-content">
+              <a
+                v-if="item.id && (!item.children || item.children.length === 0)"
+                :href="`#${item.id}`"
+                class="menu-link"
+                @click.prevent="scrollToSection(item.id)"
+              >
+                {{ item.label }}
+              </a>
+              <button
+                v-else-if="item.children && item.children.length > 0"
+                class="menu-link menu-link-button"
+                @click="toggleExpand(item)"
+              >
+                {{ item.label }}
+                <svg
+                  class="expand-icon-inline"
+                  :class="{ expanded: item.expanded }"
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M4.5 3L7.5 6L4.5 9"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+              <span v-else class="menu-link menu-link-disabled">
+                {{ item.label }}
+              </span>
             </div>
 
             <!-- Submenu items -->
@@ -165,7 +293,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from "vue";
+import { ref, onMounted, onUnmounted, nextTick } from "vue";
 
 // Props
 const props = defineProps({
@@ -174,48 +302,27 @@ const props = defineProps({
     required: true,
     // Expected format: [{ id: 'section-id', label: 'Section Name' }, ...]
   },
-  menuTitle: {
-    type: String,
-    default: "Contents",
-  },
-  defaultCollapsed: {
-    type: Boolean,
-    default: false,
-  },
 });
 
 // State
-const isCollapsed = ref(props.defaultCollapsed);
 const activeSection = ref("");
 const floatingMenu = ref(null);
-
-// Position state
-const position = ref({
-  x: 0,
-  y: 0,
-});
-
-const isDragging = ref(false);
-const dragOffset = ref({ x: 0, y: 0 });
-
-// Computed style for menu position
-const menuStyle = computed(() => ({
-  right: position.value.x ? "auto" : "32px",
-  bottom: position.value.y ? "auto" : "32px",
-  top: position.value.y ? `${position.value.y}px` : "auto",
-  left: position.value.x ? `${position.value.x}px` : "auto",
-  transform: "none",
-}));
-
-// Methods
-const toggleMenu = () => {
-  isCollapsed.value = !isCollapsed.value;
-};
+const menuContent = ref(null);
+const hoverZone = ref(null);
+const isCollapsed = ref(false);
+const isHovered = ref(false);
+const shouldShowMenu = ref(true);
+const showCompactButton = ref(false);
+const isMenuExpanded = ref(false);
+const isToggleInProgress = ref(false);
+const windowWidth = ref(window.innerWidth);
+const hoverZoneStyle = ref({});
+const compactMenuContent = ref(null);
 
 const scrollToSection = (sectionId) => {
   const element = document.getElementById(sectionId);
   if (element) {
-    const offset = 100; // Offset for header
+    const offset = 150; // Offset for header
     const elementPosition = element.getBoundingClientRect().top;
     const offsetPosition = elementPosition + window.pageYOffset - offset;
 
@@ -226,75 +333,29 @@ const scrollToSection = (sectionId) => {
 
     // Update active section immediately
     activeSection.value = sectionId;
+
+    // Don't auto-close compact menu - user must close manually via button
   }
-};
-
-// Dragging methods
-const startDrag = (e) => {
-  // Prevent dragging when clicking on links
-  if (e.target.tagName === "A" || e.target.closest("a")) {
-    return;
-  }
-
-  isDragging.value = true;
-
-  const clientX = e.type.includes("touch") ? e.touches[0].clientX : e.clientX;
-  const clientY = e.type.includes("touch") ? e.touches[0].clientY : e.clientY;
-
-  if (floatingMenu.value) {
-    const rect = floatingMenu.value.getBoundingClientRect();
-    dragOffset.value = {
-      x: clientX - rect.left,
-      y: clientY - rect.top,
-    };
-  }
-
-  document.addEventListener("mousemove", onDrag);
-  document.addEventListener("mouseup", stopDrag);
-  document.addEventListener("touchmove", onDrag);
-  document.addEventListener("touchend", stopDrag);
-
-  // Prevent text selection while dragging
-  e.preventDefault();
-};
-
-const onDrag = (e) => {
-  if (!isDragging.value) return;
-
-  const clientX = e.type.includes("touch") ? e.touches[0].clientX : e.clientX;
-  const clientY = e.type.includes("touch") ? e.touches[0].clientY : e.clientY;
-
-  let newX = clientX - dragOffset.value.x;
-  let newY = clientY - dragOffset.value.y;
-
-  // Get menu dimensions
-  const menuWidth = floatingMenu.value?.offsetWidth || 0;
-  const menuHeight = floatingMenu.value?.offsetHeight || 0;
-
-  // Constrain to viewport
-  const maxX = window.innerWidth - menuWidth;
-  const maxY = window.innerHeight - menuHeight;
-
-  newX = Math.max(0, Math.min(newX, maxX));
-  newY = Math.max(0, Math.min(newY, maxY));
-
-  position.value = {
-    x: newX,
-    y: newY,
-  };
-};
-
-const stopDrag = () => {
-  isDragging.value = false;
-  document.removeEventListener("mousemove", onDrag);
-  document.removeEventListener("mouseup", stopDrag);
-  document.removeEventListener("touchmove", onDrag);
-  document.removeEventListener("touchend", stopDrag);
 };
 
 // Toggle expand/collapse for menu items
-const toggleExpand = (item) => {
-  item.expanded = !item.expanded;
+const toggleExpand = async (item) => {
+  const wasExpanded = item.expanded;
+  item.expanded = !wasExpanded;
+
+  // Wait for DOM update
+  await nextTick();
+
+  // If expanding and has children, scroll to first child
+  if (!wasExpanded && item.children && item.children.length > 0) {
+    // Small delay to ensure DOM is updated
+    setTimeout(() => {
+      const firstChild = item.children[0];
+      if (firstChild && firstChild.id) {
+        scrollToSection(firstChild.id);
+      }
+    }, 100);
+  }
 };
 
 // Intersection Observer for active section tracking
@@ -324,19 +385,176 @@ const observeSections = () => {
   return observer;
 };
 
+// Check if menu would overlap with content
+const checkContentOverlap = () => {
+  if (!floatingMenu.value || isHovered.value) return;
+
+  const menuRect = floatingMenu.value.getBoundingClientRect();
+  const menuTop = menuRect.top;
+  const menuLeft = menuRect.left;
+
+  // Check if any section is near the bottom right corner where menu is located
+  let shouldCollapse = false;
+
+  props.menuItems.forEach((item) => {
+    const element = document.getElementById(item.id);
+    if (element) {
+      const rect = element.getBoundingClientRect();
+      const elementBottom = rect.bottom;
+      const elementRight = rect.right;
+
+      // If content extends into the menu's area (with some margin), collapse
+      // Check if content's bottom-right corner is near menu's top-left corner
+      if (
+        elementBottom > menuTop - 50 &&
+        elementRight > menuLeft - 50 &&
+        elementBottom < menuTop + menuRect.height + 100
+      ) {
+        shouldCollapse = true;
+      }
+    }
+  });
+
+  isCollapsed.value = shouldCollapse;
+};
+
+// Handle hover enter on hover zone
+const handleHoverEnter = () => {
+  isHovered.value = true;
+  isCollapsed.value = false;
+  // Update hover zone size when expanding (menu content might have changed)
+  requestAnimationFrame(() => {
+    updateHoverZoneSize();
+  });
+};
+
+// Handle hover leave
+const handleHoverLeave = () => {
+  isHovered.value = false;
+  // Small delay before checking overlap again
+  setTimeout(() => {
+    if (!isHovered.value) {
+      checkContentOverlap();
+    }
+  }, 200);
+};
+
+// Update hover zone size to match menu content
+const updateHoverZoneSize = () => {
+  if (!menuContent.value) return;
+
+  const rect = menuContent.value.getBoundingClientRect();
+  hoverZoneStyle.value = {
+    width: `${rect.width}px`,
+    height: `${rect.height}px`,
+    bottom: "32px",
+    right: "32px",
+  };
+};
+
+// Check window width and update menu visibility
+const checkWindowWidth = () => {
+  windowWidth.value = window.innerWidth;
+  const isMobile = windowWidth.value < 768;
+  shouldShowMenu.value = windowWidth.value >= 1600;
+  showCompactButton.value = !isMobile && windowWidth.value < 1600;
+
+  if (shouldShowMenu.value && menuContent.value) {
+    nextTick(() => {
+      updateHoverZoneSize();
+    });
+  }
+};
+
+// Toggle compact menu expanded state
+const toggleMenuExpanded = (event) => {
+  if (event) {
+    event.stopPropagation();
+    event.preventDefault();
+  }
+  isToggleInProgress.value = true;
+  isMenuExpanded.value = !isMenuExpanded.value;
+
+  // Reset flag after a short delay
+  setTimeout(() => {
+    isToggleInProgress.value = false;
+  }, 100);
+};
+
+// Close menu when clicking outside (disabled for compact menu - user must close manually)
+const handleClickOutside = (event) => {
+  // Don't interfere with full menu clicks (> 1600px)
+  if (shouldShowMenu.value && floatingMenu.value) {
+    if (floatingMenu.value.contains(event.target)) {
+      return;
+    }
+  }
+
+  // Compact menu (< 1600px) should only close via button click, not via clicking outside
+  // So we don't auto-close it here
+};
+
 // Lifecycle
 let observer = null;
+let scrollHandler = null;
+let resizeHandler = null;
+let clickOutsideHandler = null;
 
 onMounted(() => {
+  // Check initial window width
+  checkWindowWidth();
+
   // Small delay to ensure DOM is ready
   setTimeout(() => {
     observer = observeSections();
+    checkContentOverlap();
+    updateHoverZoneSize();
   }, 500);
+
+  // Listen to scroll and resize events
+  scrollHandler = () => {
+    checkContentOverlap();
+  };
+  resizeHandler = () => {
+    checkWindowWidth();
+    checkContentOverlap();
+    if (shouldShowMenu.value) {
+      // Use requestAnimationFrame to ensure DOM is updated
+      requestAnimationFrame(() => {
+        updateHoverZoneSize();
+      });
+    }
+  };
+
+  window.addEventListener("scroll", scrollHandler, { passive: true });
+  window.addEventListener("resize", resizeHandler);
+
+  // Add click outside listener for compact menu (using capture phase and delay)
+  clickOutsideHandler = (e) => {
+    // Use setTimeout to ensure this runs after toggleMenuExpanded
+    setTimeout(() => {
+      handleClickOutside(e);
+    }, 10);
+  };
+
+  document.addEventListener("click", clickOutsideHandler, true);
 });
 
 onUnmounted(() => {
   if (observer) {
     observer.disconnect();
+  }
+  if (scrollHandler) {
+    window.removeEventListener("scroll", scrollHandler);
+  }
+  if (resizeHandler) {
+    window.removeEventListener("resize", resizeHandler);
+  }
+
+  // Remove click outside listener
+  if (clickOutsideHandler) {
+    document.removeEventListener("click", clickOutsideHandler, true);
+    clickOutsideHandler = null;
   }
 });
 </script>
@@ -344,61 +562,25 @@ onUnmounted(() => {
 <style scoped>
 .floating-menu {
   position: fixed;
+  bottom: 32px;
+  right: 32px;
   z-index: 100;
-  transition: none;
-  cursor: move;
 }
 
-.floating-menu.collapsed {
-  cursor: default;
-}
-
-.floating-menu.dragging {
-  cursor: grabbing;
-  user-select: none;
-}
-
-.floating-menu.dragging .menu-content {
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
-  transform: scale(1.02);
-}
-
-/* Toggle Button */
-.menu-toggle {
-  position: absolute;
-  left: -16px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 32px;
-  height: 32px;
-  background: white;
-  border: 1px solid #e5e5e5;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Hover Zone - matches menu content size */
+.hover-zone {
+  position: fixed;
+  z-index: 99;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: all 0.2s ease;
-  z-index: 101;
+  pointer-events: auto;
 }
 
-.menu-toggle:hover {
-  background: #f5f5f5;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+.floating-menu.collapsed .hover-zone {
+  z-index: 100;
 }
 
-.menu-toggle:active {
-  transform: translateY(-50%) scale(0.95);
-}
-
-.toggle-icon {
-  color: #595959;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.toggle-icon.rotated {
-  transform: rotate(180deg);
+.floating-menu:not(.collapsed) .hover-zone {
+  pointer-events: none;
 }
 
 /* Menu Content */
@@ -414,60 +596,35 @@ onUnmounted(() => {
   overflow-y: auto;
   animation: fadeIn 0.2s ease-out;
   user-select: none;
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.menu-content.collapsed {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+
+.floating-menu.collapsed .menu-content {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  pointer-events: none;
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateX(10px);
+    transform: translateX(-10px);
   }
   to {
     opacity: 1;
     transform: translateX(0);
   }
-}
-
-/* Menu Header */
-.menu-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #e5e5e5;
-  cursor: move;
-}
-
-.menu-title {
-  font-family: "Poppins", sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  color: #000000;
-  margin: 0;
-  line-height: normal;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.drag-handle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #999999;
-  cursor: move;
-  padding: 4px;
-  border-radius: 4px;
-  transition: all 0.2s ease;
-}
-
-.drag-handle:hover {
-  color: #666666;
-  background: #f5f5f5;
-}
-
-.drag-handle svg {
-  display: block;
 }
 
 /* Menu Navigation */
@@ -514,10 +671,27 @@ onUnmounted(() => {
   color: #999999;
 }
 
+.menu-link-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  text-align: left;
+}
+
+.menu-link-button:hover {
+  background: #f5f5f5;
+  color: #000000;
+  transform: translateX(-2px);
+}
+
 .menu-link:hover:not(.menu-link-disabled) {
   background: #f5f5f5;
   color: #000000;
-  transform: translateX(2px);
+  transform: translateX(-2px);
 }
 
 .menu-item.active .menu-link {
@@ -534,34 +708,27 @@ onUnmounted(() => {
   transform: translateY(-50%);
   width: 3px;
   height: 60%;
-  background: #4285f4;
+  background: #1853dd;
   border-radius: 2px;
 }
 
-/* Expand/Collapse Button */
-.expand-button {
-  background: none;
-  border: none;
-  padding: 4px;
-  cursor: pointer;
-  color: #999999;
-  border-radius: 4px;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.expand-button:hover {
-  background: #f5f5f5;
-  color: #666666;
-}
+/* Expand/Collapse Button - Removed as we now use inline button */
 
 .expand-icon {
   transition: transform 0.2s ease;
 }
 
 .expand-icon.expanded {
+  transform: rotate(90deg);
+}
+
+.expand-icon-inline {
+  transition: transform 0.2s ease;
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
+.expand-icon-inline.expanded {
   transform: rotate(90deg);
 }
 
@@ -573,6 +740,7 @@ onUnmounted(() => {
   list-style: none;
   margin: 0;
   padding: 0;
+  transform-origin: bottom;
 }
 
 .submenu-list.expanded {
@@ -595,6 +763,7 @@ onUnmounted(() => {
   transition: all 0.2s ease;
   line-height: 1.4;
   position: relative;
+  margin-bottom: 2px;
 }
 
 .submenu-link-disabled {
@@ -605,7 +774,7 @@ onUnmounted(() => {
 .submenu-link:hover:not(.submenu-link-disabled) {
   background: #f5f5f5;
   color: #000000;
-  transform: translateX(2px);
+  transform: translateX(-2px);
 }
 
 .submenu-item.active .submenu-link {
@@ -672,8 +841,86 @@ onUnmounted(() => {
   }
 }
 
+/* Compact Menu Button (for screens < 1600px) */
+.floating-menu-compact {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 100;
+  display: none;
+}
+
+.menu-icon-button {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+  border: 1px solid #e5e5e5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #595959;
+}
+
+.menu-icon-button:hover {
+  background: #f5f5f5;
+  color: #000000;
+  transform: scale(1.05);
+}
+
+/* Compact Menu Content */
+.floating-menu-compact-content {
+  position: fixed;
+  bottom: 100px;
+  right: 32px;
+  z-index: 99;
+  max-width: 280px;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.menu-content-compact {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  min-width: 240px;
+  max-width: 280px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+  border: 1px solid #e5e5e5;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+/* Show compact button on screens < 1600px, hide on mobile */
+@media (min-width: 768px) and (max-width: 1599px) {
+  .floating-menu-compact {
+    display: block;
+  }
+}
+
 @media (max-width: 768px) {
   .floating-menu {
+    display: none;
+  }
+
+  .floating-menu-compact {
+    display: none;
+  }
+
+  .floating-menu-compact-content {
     display: none;
   }
 }
